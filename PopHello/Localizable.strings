@@ -1,0 +1,10 @@
+"SERVICE_UNAVAILABLE_HARDWARE_SUPPORT" = "Geofencing is not supported by your hardware.";
+"SERVICE_UNAVAILABLE_LOCATION_SERVICES_ENABLED" = "Location Services are not enabled.";
+"SERVICE_UNAVAILABLE_LOCATION_SERVICES_AUTHORIZED" = "Location Services are not authorized for this application.";
+"SERVICE_UNAVAILABLE_BACKGROUND_REFRESH_AVAILABLE" = "Background refresh is unavailable";
+"SERVICE_UNAVAILABLE_REGION_MONITORING_AVAILABLE" = "Monitoring failed for a region.";
+"SERVICE_UNAVAILABLE_MULTITASKING_SUPPORTED" = "Multitasking is not supported.";
+"OK" = "OK";
+"TAG_CREATE_SUCCESS" = "Tag created! :)";
+"TAG_CREATE_FAILURE" = "Sorry, unable to create your tag :(";
+"LOCATION_UNKNOWN" = "Your location is unknown. Try again in a few seconds";
