@@ -5,6 +5,9 @@
 "SERVICE_UNAVAILABLE_REGION_MONITORING_AVAILABLE" = "Monitoring failed for a region.";
 "SERVICE_UNAVAILABLE_MULTITASKING_SUPPORTED" = "Multitasking is not supported.";
 "OK" = "OK";
-"TAG_CREATE_SUCCESS" = "Tag created! :)";
-"TAG_CREATE_FAILURE" = "Sorry, unable to create your tag :(";
-"LOCATION_UNKNOWN" = "Your location is unknown. Try again in a few seconds";
+"TAG_CREATE_SUBMIT" = "Post";
+"TAG_CREATE_SUCCESS" = "Tag posted";
+"TAG_CREATE_FAILURE" = "Oh-o, something went horribly wrong";
+"LOCATION_UNKNOWN" = "Can't find your location, try again in a few seconds";
+"TAG_VIEW_OK" = "Ok";
+"PENDING" = "Thinking...";

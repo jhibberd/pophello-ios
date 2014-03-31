@@ -21,7 +21,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor ph_unavailableColor];
+    self.view.backgroundColor = [UIColor blackColor];
     
     NSString *textReason;
     switch (_missing) {

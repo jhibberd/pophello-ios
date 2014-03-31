@@ -1,15 +1,17 @@
 
 #import <UIKit/UIKit.h>
+#import "PHAnimationViewDelegate.h"
 #import "PHServer.h"
 #import "PHTagCreateDelegate.h"
 #import "PHZoneManager.h"
 
-@interface PHMainViewController : UIViewController <UIGestureRecognizerDelegate>
+@interface PHMainViewController : UIViewController <UIGestureRecognizerDelegate, PHAnimationViewDelegate>
 - (void)presentTagView:(NSDictionary *)tag;
 - (void)presentTagCreate:(PHZoneManager *)zoneManager
                   server:(PHServer *)server
                 delegate:(id<PHTagCreateDelegate>)delegate;
-- (void)presentTagCreateSuccess;
-- (void)presentTagCreateFailure;
+- (void)presentTagCreationSuccess;
+- (void)presentTagCreationFailure;
+- (void)presentPending;
 - (void)presentNothing;
 @end

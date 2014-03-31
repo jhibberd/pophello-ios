@@ -1,5 +1,7 @@
 
 #import "PHTagCreateSuccess.h"
+#import "UIColor+PHColor.h"
+#import "UIFont+PHFont.h"
 
 @implementation PHTagCreateSuccess
 
@@ -8,11 +10,13 @@
     self = [super initWithFrame:frame];
     if (self) {
         
-        self.backgroundColor = [UIColor whiteColor];
+        self.backgroundColor = [UIColor ph_successBackgroundColor];
         
         // init text label
         UILabel *textLabel = [[UILabel alloc] init];
-        textLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleHeadline];
+        textLabel.font = [UIFont ph_boldPrimaryFont];
+        textLabel.backgroundColor = [UIColor ph_successBackgroundColor];
+        textLabel.textColor = [UIColor ph_successTextColor];
         textLabel.numberOfLines = 0;
         textLabel.text = NSLocalizedString(@"TAG_CREATE_SUCCESS", nil);
         [self addSubview:textLabel];
@@ -20,8 +24,8 @@
         // define layout
         textLabel.translatesAutoresizingMaskIntoConstraints = NO;
         NSDictionary *bindings = NSDictionaryOfVariableBindings(self, textLabel);
-        NSArray *fmts = @[@"V:|-10-[textLabel]-(>=10)-|",
-                          @"|-10-[textLabel]-10-|",
+        NSArray *fmts = @[@"V:|-15-[textLabel]-(>=15)-|",
+                          @"|-15-[textLabel]-15-|",
                           [NSString stringWithFormat:@"[self(%f)]", self.frame.size.width],     // fill width
                           [NSString stringWithFormat:@"V:[self(%f)]", self.frame.size.height]]; // fill height
         for (NSString *fmt in fmts) {

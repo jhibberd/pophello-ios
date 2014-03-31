@@ -1,39 +1,64 @@
 
 #import "PHMainViewController.h"
-#import "PHAnimationAdapter.h"
-#import "PHAnimationAdapterTagCreate.h"
-#import "PHAnimationAdapterNothing.h"
-#import "PHAnimationAdapterTagView.h"
-#import "PHAnimationAdapterTagCreateSuccess.h"
-#import "PHAnimationAdapterTagCreateFailure.h"
+#import "PHAnimationView.h"
+#import "PHPending.h"
+#import "PHTagCreate.h"
+#import "PHTagCreateFailure.h"
+#import "PHTagCreateSuccess.h"
+#import "PHTagView.h"
 #import "UIColor+PHColor.h"
 
-static NSTimeInterval const kPHAnimationDuration = 1;
+static CGFloat const kPHTopMargin = 35;
+static CGFloat const kPHViewHeight = 190;
 
 @interface PHMainViewController ()
 @end
 
 @implementation PHMainViewController {
-    PHAnimationAdapter* _viewDataVisible;
-    PHAnimationAdapter* _viewDataActive;
-    UIView *_viewVisible;
+    PHAnimationView *_animationView;
+    CGRect _animationViewFrame;
+    NSString *_identifierVisible;
+    NSString *_identifierActive;
+    UIView *_viewActive;
     BOOL _isAnimating;
 }
 
+// Initialise.
+//
+// All animations take place in a separate view to minimise the area of the screen involved in the animation and to
+// provide additional padding between the slide in/out animations.
+//
+// The negative right margin in the autolayout constraints is the padding between views during animation.
+//
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor ph_tagBackgroundColor];
+    self.view.backgroundColor = [UIColor ph_appBackgroundColor];
     
-    // initial valid state showing nothing
-    _viewDataActive = [[PHAnimationAdapterNothing alloc] init];
-    _viewDataVisible = _viewDataActive;
-    _viewVisible = [_viewDataActive makeView:CGRectNull];
+    _animationViewFrame = CGRectMake(0, 0, self.view.frame.size.width, kPHViewHeight);
+    _animationView = [[PHAnimationView alloc] init];
+    _animationView.delegate = self;
+    [self.view addSubview:_animationView];
+    
+    _animationView.translatesAutoresizingMaskIntoConstraints = NO;
+    UIView *view = self.view;
+    NSDictionary *bindings = NSDictionaryOfVariableBindings(view, _animationView);
+    NSArray *fmts = @[[NSString stringWithFormat:@"V:|-%f-[_animationView(%f)]-(>=0)-|", kPHTopMargin, kPHViewHeight],
+                      [NSString stringWithFormat:@"|[_animationView]-(-%f)-|", self.view.frame.size.width],
+                      [NSString stringWithFormat:@"[view(%f)]", self.view.frame.size.width],     // fill width
+                      [NSString stringWithFormat:@"V:[view(%f)]", self.view.frame.size.height]]; // fill height
+    for (NSString *fmt in fmts) {
+        [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:fmt
+                                                                     options:0
+                                                                     metrics:nil
+                                                                       views:bindings]];
+    }    
 }
 
 - (void)presentTagView:(NSDictionary *)tag
 {
-    _viewDataActive = [[PHAnimationAdapterTagView alloc] initWithTag:tag];
+    _identifierActive = [NSString stringWithFormat:@"tag-%@", tag[@"id"]];
+    _viewActive = [[PHTagView alloc] initWithFrame:_animationViewFrame tag:tag];
     [self animateUIToMatchState];
 }
 
@@ -41,103 +66,73 @@ static NSTimeInterval const kPHAnimationDuration = 1;
                   server:(PHServer *)server
                 delegate:(id<PHTagCreateDelegate>)delegate
 {
-    _viewDataActive = [[PHAnimationAdapterTagCreate alloc] initWithZoneManager:zoneManager
-                                                                          server:server
-                                                                        delegate:delegate];
+    _identifierActive = @"tag-creation";
+    _viewActive = [[PHTagCreate alloc] initWithFrame:_animationViewFrame
+                                         zoneManager:zoneManager
+                                              server:server
+                                            delegate:delegate];
     [self animateUIToMatchState];
 }
 
-- (void)presentTagCreateSuccess
+- (void)presentTagCreationSuccess
 {
-    _viewDataActive = [[PHAnimationAdapterTagCreateSuccess alloc] init];
+    _identifierActive = @"tag-creation-success";
+    _viewActive = [[PHTagCreateSuccess alloc] initWithFrame:_animationViewFrame];
     [self animateUIToMatchState];
 }
 
-- (void)presentTagCreateFailure
+- (void)presentTagCreationFailure
 {
-    _viewDataActive = [[PHAnimationAdapterTagCreateFailure alloc] init];
+    _identifierActive = @"tag-creation-failure";
+    _viewActive = [[PHTagCreateFailure alloc] initWithFrame:_animationViewFrame];
     [self animateUIToMatchState];
 }
 
-// Show no view.
-//
-// This isn't animated because when this occurs the app isn't visible to the user and it's important that it happens
-// quickly.
-//
+- (void)presentPending
+{
+    _identifierActive = @"pending";
+    _viewActive = [[PHPending alloc] initWithFrame:_animationViewFrame];
+    [self animateUIToMatchState];
+}
+
 - (void)presentNothing
 {
-    [self.view.layer removeAllAnimations];
-    if (_viewVisible != nil) {
-        [_viewVisible removeFromSuperview];
-    }
-    _viewDataActive = [[PHAnimationAdapterNothing alloc] init];
-    _viewDataVisible = _viewDataActive;
-    _viewVisible = [_viewDataActive makeView:CGRectNull];
+    _identifierActive = nil;
+    _viewActive = nil;
+    [_animationView presentNothingImmediately];
 }
 
+// Animate the UI to match its active state (what it should be displaying).
+//
+// The identifier of the active state is compared with the identifier of the visible state. If both are equal then the
+// UI is up to date and no further action needs to be taken. An identifier can be nil (displaying nothing), so these
+// are converted to empty NSString objects to simplify comparison.
+//
+// If the UI is not up to date but an animation is currently in progress then return. When the current animation
+// completes it will check to see whether the UI is up to date, find that it isn't and begin another animation to the
+// active state.
+//
+// It's safe to modify the `_viewActive` field while an animation is playing.
+//
 - (void)animateUIToMatchState
 {
-    // if the UI and state are already in sync take no further action
-    if ([_viewDataVisible.identifier isEqualToString:_viewDataActive.identifier]) {
+    NSString *identifierVisibleString = _identifierVisible == nil ? @"" : _identifierVisible;
+    NSString *idenfifierActiveString = _identifierActive == nil ? @"" : _identifierActive;
+    if ([identifierVisibleString isEqualToString:idenfifierActiveString]) {
         return;
     }
-    
-    // if we're already animating then take no further action; when the current animation completes it will check
-    // whether the UI matches the state and reanimate if not
     if (_isAnimating) {
         return;
     }
     _isAnimating = YES;
-    
-    // `_viewDataActive` can potentially be changed during the course of the animation. We don't want the object being
-    // animated to change part way through the animation so make a local copy.
-    PHAnimationAdapter *viewDataAnimating = [_viewDataActive copy];
-    UIView *viewAfter = [_viewDataActive makeView:self.view.bounds];
-    UIView *viewBefore = _viewVisible;
-    
-    // 1) nil -> view | fade in
-    if (viewBefore == nil && viewAfter != nil) {
-        viewAfter.alpha = 0;
-        [self.view addSubview:viewAfter];
-        [UIView animateWithDuration:kPHAnimationDuration animations:^{
-            viewAfter.alpha = 1;
-        } completion:^(BOOL finished) {
-            _viewVisible = viewAfter;
-            _viewDataVisible = viewDataAnimating;
-            _isAnimating = NO;
-            [self animateUIToMatchState];
-        }];
-        
-    // 2) view -> nil | fade out
-    } else if (viewBefore != nil && viewAfter == nil) {
-        [UIView animateWithDuration:kPHAnimationDuration animations:^{
-            viewBefore.alpha = 0;
-        } completion:^(BOOL finished) {
-            [viewBefore removeFromSuperview];
-            _viewVisible = viewAfter;
-            _viewDataVisible = viewDataAnimating;
-            _isAnimating = NO;
-            [self animateUIToMatchState];
-        }];
-        
-    // 3) view -> view | transition from view to view
-    } else {
-        viewAfter.alpha = 0;
-        [self.view addSubview:viewAfter];
-        [UIView animateWithDuration:kPHAnimationDuration animations:^{
-            viewBefore.alpha = 0;
-        } completion:^(BOOL finished) {
-            [viewBefore removeFromSuperview];
-            [UIView animateWithDuration:kPHAnimationDuration animations:^{
-                viewAfter.alpha = 1;
-            } completion:^(BOOL finished) {
-                _viewVisible = viewAfter;
-                _viewDataVisible = viewDataAnimating;
-                _isAnimating = NO;
-                [self animateUIToMatchState];
-            }];
-        }];
-    }
+    [_animationView presentView:_viewActive identifier:_identifierActive];
+}
+
+- (void)animationViewDidFinishPresenting:(NSString *)identifier
+{
+    _isAnimating = NO;
+    _identifierVisible = identifier;
+    [self animateUIToMatchState];
 }
 
 @end

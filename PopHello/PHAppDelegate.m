@@ -37,7 +37,7 @@
     // send usage stats and error reports to a third party server to analysis
     [BugSenseController sharedControllerWithBugSenseAPIKey:@"5b8a5499" userDictionary:nil sendImmediately:YES];
     
-    [PHLogRecorder record];
+    //[PHLogRecorder record];
     MWLogInfo(@"Application launched");
     
     // manually set the root view controller to the main view controller so that the "unavailable" view controller
@@ -114,18 +114,33 @@
 
 #pragma mark - UI Event Handlers
 
+// Handle the user submitting a request to the server to create a new tag.
+//
+// If the app is in the background when this message is received ignore it because we don't want to stop monitoring for
+// significant location updates and there is no point in updating the UI. Althought this is unlikely in this handler
+// because the latency between the user submitting a request and this delegate receiving the message doesn't leave much
+// of an opportunity for the app to be made inactive.
+//
+- (void)newTagCreationWasSubmitted
+{
+    if ([UIApplication sharedApplication].applicationState != UIApplicationStateActive) {
+        return;
+    }
+    [_mainView presentPending];
+}
+
 // Handle the user successfully creating a tag.
 //
 // If the app is in the background when this message is received ignore it because we don't want to stop monitoring for
 // significant location updates and there is no point in updating the UI.
 //
-- (void)tagCreateDidSucceed
+- (void)newTagCreationDidSucceed
 {
     if ([UIApplication sharedApplication].applicationState != UIApplicationStateActive) {
         return;
     }
     [_zoneManager stopMonitoringLocationChanges];
-    [_mainView presentTagCreateSuccess];
+    [_mainView presentTagCreationSuccess];
 }
 
 // Handle an error occurring when the user tried to create a tag.
@@ -133,13 +148,13 @@
 // If the app is in the background when this message is received ignore it because we don't want to stop monitoring for
 // significant location updates and there is no point in updating the UI.
 //
-- (void)tagCreateDidFail
+- (void)newTagCreationDidFail
 {
     if ([UIApplication sharedApplication].applicationState != UIApplicationStateActive) {
         return;
     }
     [_zoneManager stopMonitoringLocationChanges];
-    [_mainView presentTagCreateFailure];
+    [_mainView presentTagCreationFailure];
 }
 
 

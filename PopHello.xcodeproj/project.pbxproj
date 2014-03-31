@@ -12,22 +12,19 @@
 		0D0E039918D154CE009B604E /* PopHello.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0D0E039718D154CE009B604E /* PopHello.xcdatamodeld */; };
 		0D1A90C51892656B009636D0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0D1A90C41892656B009636D0 /* Localizable.strings */; };
 		0D6488D418CD45B6002FFD3E /* PHTagCreate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D6488D318CD45B6002FFD3E /* PHTagCreate.m */; };
-		0D6488D818CF10B4002FFD3E /* PHAnimationAdapterTagView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D6488D718CF10B4002FFD3E /* PHAnimationAdapterTagView.m */; };
-		0D6488DB18CF113F002FFD3E /* PHAnimationAdapterTagCreate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D6488DA18CF113F002FFD3E /* PHAnimationAdapterTagCreate.m */; };
 		0D70C4241895FD3B0043ED68 /* UIColor+PHColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D70C4231895FD3B0043ED68 /* UIColor+PHColor.m */; };
 		0D7824DA18DAC27100F28481 /* PHLogRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D7824D918DAC27100F28481 /* PHLogRecorder.m */; };
 		0D7824DD18DBE74000F28481 /* PHTagActiveStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D7824DC18DBE74000F28481 /* PHTagActiveStore.m */; };
 		0D7824E518DDA51700F28481 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D7824E418DDA51700F28481 /* SystemConfiguration.framework */; };
 		0D7824E718DDA52800F28481 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D7824E618DDA52800F28481 /* libz.dylib */; };
-		0D9DF8DD18CFF2A30040F7F3 /* PHAnimationAdapterNothing.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D9DF8DC18CFF2A30040F7F3 /* PHAnimationAdapterNothing.m */; };
-		0D9DF8E018CFF6430040F7F3 /* PHAnimationAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D9DF8DF18CFF6430040F7F3 /* PHAnimationAdapter.m */; };
+		0DA60FAE18E81CF7004E09B1 /* UIFont+PHFont.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DA60FAD18E81CF7004E09B1 /* UIFont+PHFont.m */; };
+		0DA60FB118E8206C004E09B1 /* PHPending.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DA60FB018E8206C004E09B1 /* PHPending.m */; };
+		0DA60FB718E8262C004E09B1 /* PHAnimationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DA60FB618E8262C004E09B1 /* PHAnimationView.m */; };
 		0DA99130189237B700194290 /* PHMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DA9912F189237B700194290 /* PHMainViewController.m */; };
 		0DA991331892390300194290 /* PHUnavailableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DA991321892390300194290 /* PHUnavailableViewController.m */; };
 		0DA9913618924D0300194290 /* PHZoneServiceAvailabilityMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DA9913518924D0300194290 /* PHZoneServiceAvailabilityMonitor.m */; };
 		0DACA7CA18E10F66000297EB /* PHStoreManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DACA7C918E10F66000297EB /* PHStoreManager.m */; };
 		0DACA7CD18E267D8000297EB /* PHTagCreateSuccess.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DACA7CC18E267D8000297EB /* PHTagCreateSuccess.m */; };
-		0DACA7D118E26A6F000297EB /* PHAnimationAdapterTagCreateSuccess.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DACA7D018E26A6F000297EB /* PHAnimationAdapterTagCreateSuccess.m */; };
-		0DACA7D518E276F5000297EB /* PHAnimationAdapterTagCreateFailure.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DACA7D418E276F5000297EB /* PHAnimationAdapterTagCreateFailure.m */; };
 		0DACA7D818E27753000297EB /* PHTagCreateFailure.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DACA7D718E27753000297EB /* PHTagCreateFailure.m */; };
 		0DADA23D189C8CFE00AFA25C /* MWLogging.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DADA23C189C8CFE00AFA25C /* MWLogging.m */; };
 		0DADA241189C8D4E00AFA25C /* PHLocationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DADA23F189C8D4E00AFA25C /* PHLocationService.m */; };
@@ -70,10 +67,6 @@
 		0D1A90C41892656B009636D0 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		0D6488D218CD45B6002FFD3E /* PHTagCreate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHTagCreate.h; sourceTree = "<group>"; };
 		0D6488D318CD45B6002FFD3E /* PHTagCreate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHTagCreate.m; sourceTree = "<group>"; };
-		0D6488D618CF10B4002FFD3E /* PHAnimationAdapterTagView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHAnimationAdapterTagView.h; sourceTree = "<group>"; };
-		0D6488D718CF10B4002FFD3E /* PHAnimationAdapterTagView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHAnimationAdapterTagView.m; sourceTree = "<group>"; };
-		0D6488D918CF113F002FFD3E /* PHAnimationAdapterTagCreate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHAnimationAdapterTagCreate.h; sourceTree = "<group>"; };
-		0D6488DA18CF113F002FFD3E /* PHAnimationAdapterTagCreate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHAnimationAdapterTagCreate.m; sourceTree = "<group>"; };
 		0D70C4221895FD3B0043ED68 /* UIColor+PHColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+PHColor.h"; sourceTree = "<group>"; };
 		0D70C4231895FD3B0043ED68 /* UIColor+PHColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+PHColor.m"; sourceTree = "<group>"; };
 		0D7824D818DAC27100F28481 /* PHLogRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHLogRecorder.h; sourceTree = "<group>"; };
@@ -82,10 +75,12 @@
 		0D7824DC18DBE74000F28481 /* PHTagActiveStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHTagActiveStore.m; sourceTree = "<group>"; };
 		0D7824E418DDA51700F28481 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		0D7824E618DDA52800F28481 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		0D9DF8DB18CFF2A30040F7F3 /* PHAnimationAdapterNothing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHAnimationAdapterNothing.h; sourceTree = "<group>"; };
-		0D9DF8DC18CFF2A30040F7F3 /* PHAnimationAdapterNothing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHAnimationAdapterNothing.m; sourceTree = "<group>"; };
-		0D9DF8DE18CFF6430040F7F3 /* PHAnimationAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHAnimationAdapter.h; sourceTree = "<group>"; };
-		0D9DF8DF18CFF6430040F7F3 /* PHAnimationAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHAnimationAdapter.m; sourceTree = "<group>"; };
+		0DA60FAC18E81CF7004E09B1 /* UIFont+PHFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+PHFont.h"; sourceTree = "<group>"; };
+		0DA60FAD18E81CF7004E09B1 /* UIFont+PHFont.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+PHFont.m"; sourceTree = "<group>"; };
+		0DA60FAF18E8206C004E09B1 /* PHPending.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHPending.h; sourceTree = "<group>"; };
+		0DA60FB018E8206C004E09B1 /* PHPending.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHPending.m; sourceTree = "<group>"; };
+		0DA60FB518E8262C004E09B1 /* PHAnimationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHAnimationView.h; sourceTree = "<group>"; };
+		0DA60FB618E8262C004E09B1 /* PHAnimationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHAnimationView.m; sourceTree = "<group>"; };
 		0DA9912E189237B700194290 /* PHMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHMainViewController.h; sourceTree = "<group>"; };
 		0DA9912F189237B700194290 /* PHMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHMainViewController.m; sourceTree = "<group>"; };
 		0DA991311892390300194290 /* PHUnavailableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHUnavailableViewController.h; sourceTree = "<group>"; };
@@ -97,11 +92,7 @@
 		0DACA7C918E10F66000297EB /* PHStoreManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHStoreManager.m; sourceTree = "<group>"; };
 		0DACA7CB18E267D8000297EB /* PHTagCreateSuccess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHTagCreateSuccess.h; sourceTree = "<group>"; };
 		0DACA7CC18E267D8000297EB /* PHTagCreateSuccess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHTagCreateSuccess.m; sourceTree = "<group>"; };
-		0DACA7CF18E26A6F000297EB /* PHAnimationAdapterTagCreateSuccess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHAnimationAdapterTagCreateSuccess.h; sourceTree = "<group>"; };
-		0DACA7D018E26A6F000297EB /* PHAnimationAdapterTagCreateSuccess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHAnimationAdapterTagCreateSuccess.m; sourceTree = "<group>"; };
 		0DACA7D218E26CD5000297EB /* PHTagCreateDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PHTagCreateDelegate.h; sourceTree = "<group>"; };
-		0DACA7D318E276F5000297EB /* PHAnimationAdapterTagCreateFailure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHAnimationAdapterTagCreateFailure.h; sourceTree = "<group>"; };
-		0DACA7D418E276F5000297EB /* PHAnimationAdapterTagCreateFailure.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHAnimationAdapterTagCreateFailure.m; sourceTree = "<group>"; };
 		0DACA7D618E27753000297EB /* PHTagCreateFailure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHTagCreateFailure.h; sourceTree = "<group>"; };
 		0DACA7D718E27753000297EB /* PHTagCreateFailure.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHTagCreateFailure.m; sourceTree = "<group>"; };
 		0DADA23B189C8CFE00AFA25C /* MWLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWLogging.h; sourceTree = "<group>"; };
@@ -121,6 +112,7 @@
 		0DB062CC18D3EDFB00F08C3B /* MockRoute.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = MockRoute.gpx; path = ../MockRoute.gpx; sourceTree = "<group>"; };
 		0DBE7CD01897442300074E96 /* PHTagView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHTagView.h; sourceTree = "<group>"; };
 		0DBE7CD11897442300074E96 /* PHTagView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHTagView.m; sourceTree = "<group>"; };
+		0DC3D13318E8FAD500C2FFF9 /* PHAnimationViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PHAnimationViewDelegate.h; sourceTree = "<group>"; };
 		0DE54203188E3E85004F72E9 /* PopHello.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PopHello.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0DE54206188E3E85004F72E9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		0DE54208188E3E85004F72E9 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -179,27 +171,20 @@
 				0D70C4231895FD3B0043ED68 /* UIColor+PHColor.m */,
 				0D7824D818DAC27100F28481 /* PHLogRecorder.h */,
 				0D7824D918DAC27100F28481 /* PHLogRecorder.m */,
+				0DA60FAC18E81CF7004E09B1 /* UIFont+PHFont.h */,
+				0DA60FAD18E81CF7004E09B1 /* UIFont+PHFont.m */,
 			);
 			name = Utility;
 			sourceTree = "<group>";
 		};
-		0DACA7CE18E26979000297EB /* AnimationAdapter */ = {
+		0DACA7CE18E26979000297EB /* Animation */ = {
 			isa = PBXGroup;
 			children = (
-				0D9DF8DE18CFF6430040F7F3 /* PHAnimationAdapter.h */,
-				0D9DF8DF18CFF6430040F7F3 /* PHAnimationAdapter.m */,
-				0D9DF8DB18CFF2A30040F7F3 /* PHAnimationAdapterNothing.h */,
-				0D9DF8DC18CFF2A30040F7F3 /* PHAnimationAdapterNothing.m */,
-				0D6488D618CF10B4002FFD3E /* PHAnimationAdapterTagView.h */,
-				0D6488D718CF10B4002FFD3E /* PHAnimationAdapterTagView.m */,
-				0D6488D918CF113F002FFD3E /* PHAnimationAdapterTagCreate.h */,
-				0D6488DA18CF113F002FFD3E /* PHAnimationAdapterTagCreate.m */,
-				0DACA7CF18E26A6F000297EB /* PHAnimationAdapterTagCreateSuccess.h */,
-				0DACA7D018E26A6F000297EB /* PHAnimationAdapterTagCreateSuccess.m */,
-				0DACA7D318E276F5000297EB /* PHAnimationAdapterTagCreateFailure.h */,
-				0DACA7D418E276F5000297EB /* PHAnimationAdapterTagCreateFailure.m */,
+				0DA60FB518E8262C004E09B1 /* PHAnimationView.h */,
+				0DA60FB618E8262C004E09B1 /* PHAnimationView.m */,
+				0DC3D13318E8FAD500C2FFF9 /* PHAnimationViewDelegate.h */,
 			);
-			name = AnimationAdapter;
+			name = Animation;
 			sourceTree = "<group>";
 		};
 		0DADA245189E0B7400AFA25C /* Misc */ = {
@@ -266,7 +251,7 @@
 		0DBE7CCF189743E200074E96 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				0DACA7CE18E26979000297EB /* AnimationAdapter */,
+				0DACA7CE18E26979000297EB /* Animation */,
 				0DBE7CD01897442300074E96 /* PHTagView.h */,
 				0DBE7CD11897442300074E96 /* PHTagView.m */,
 				0D6488D218CD45B6002FFD3E /* PHTagCreate.h */,
@@ -276,6 +261,8 @@
 				0DACA7CC18E267D8000297EB /* PHTagCreateSuccess.m */,
 				0DACA7D618E27753000297EB /* PHTagCreateFailure.h */,
 				0DACA7D718E27753000297EB /* PHTagCreateFailure.m */,
+				0DA60FAF18E8206C004E09B1 /* PHPending.h */,
+				0DA60FB018E8206C004E09B1 /* PHPending.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -471,31 +458,28 @@
 			buildActionMask = 2147483647;
 			files = (
 				0DADA24A189E133000AFA25C /* PHServer.m in Sources */,
-				0D6488DB18CF113F002FFD3E /* PHAnimationAdapterTagCreate.m in Sources */,
 				0D094FD018D7FC4D006EFD4C /* PHTagNotification.m in Sources */,
 				0D7824DD18DBE74000F28481 /* PHTagActiveStore.m in Sources */,
-				0D9DF8DD18CFF2A30040F7F3 /* PHAnimationAdapterNothing.m in Sources */,
 				0DACA7CD18E267D8000297EB /* PHTagCreateSuccess.m in Sources */,
 				0DE54217188E3E85004F72E9 /* PHAppDelegate.m in Sources */,
-				0D6488D818CF10B4002FFD3E /* PHAnimationAdapterTagView.m in Sources */,
 				0DADA23D189C8CFE00AFA25C /* MWLogging.m in Sources */,
+				0DA60FAE18E81CF7004E09B1 /* UIFont+PHFont.m in Sources */,
 				0DA99130189237B700194290 /* PHMainViewController.m in Sources */,
 				0D6488D418CD45B6002FFD3E /* PHTagCreate.m in Sources */,
 				0DE54213188E3E85004F72E9 /* main.m in Sources */,
 				0DA991331892390300194290 /* PHUnavailableViewController.m in Sources */,
 				0DADA241189C8D4E00AFA25C /* PHLocationService.m in Sources */,
 				0DACA7CA18E10F66000297EB /* PHStoreManager.m in Sources */,
-				0DACA7D518E276F5000297EB /* PHAnimationAdapterTagCreateFailure.m in Sources */,
 				0DA9913618924D0300194290 /* PHZoneServiceAvailabilityMonitor.m in Sources */,
 				0DB062CB18D3D4CA00F08C3B /* PHTagsStore.m in Sources */,
-				0DACA7D118E26A6F000297EB /* PHAnimationAdapterTagCreateSuccess.m in Sources */,
-				0D9DF8E018CFF6430040F7F3 /* PHAnimationAdapter.m in Sources */,
 				0DADA244189E049300AFA25C /* PHZoneManager.m in Sources */,
 				0DACA7D818E27753000297EB /* PHTagCreateFailure.m in Sources */,
 				0D0E039918D154CE009B604E /* PopHello.xcdatamodeld in Sources */,
 				0DBE7CD21897442300074E96 /* PHTagView.m in Sources */,
 				0D7824DA18DAC27100F28481 /* PHLogRecorder.m in Sources */,
+				0DA60FB718E8262C004E09B1 /* PHAnimationView.m in Sources */,
 				0D70C4241895FD3B0043ED68 /* UIColor+PHColor.m in Sources */,
+				0DA60FB118E8206C004E09B1 /* PHPending.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
