@@ -1,5 +1,6 @@
 
 #import "MWLogging.h"
+#import "NSArray+PHArray.h"
 #import "PHLocationService.h"
 
 static CLLocationDistance const kPHRegionTagRadius = 100; // meters
@@ -187,12 +188,34 @@ typedef NS_ENUM(NSUInteger, PHLocationUpdateMode) {
     [self.delegate monitoringDidFailForRegion];
 }
 
-// Monitor a geofence for each tag in the zone.
+// Update the tag geofences being monitored.
 //
-- (void)buildTagGeofences:(NSArray *)tags
+// Geofences are preserved if they also appear in the new set of tags.
+//
+- (void)updateGeofencesFromTags:(NSArray *)tagsOld toTags:(NSArray *)tagsNew
 {
-    MWLogInfo(@"Creating geofences");
-    for (NSDictionary *tag in tags) {
+    MWLogInfo(@"Updating geofences");
+    
+    NSArray *tagsExpired = [tagsOld subarrayOfTagsNotIn:tagsNew];
+    for (CLRegion *region in _locationManager.monitoredRegions) {
+        NSString *tagId = region.identifier;
+        
+        if ([tagsExpired containsTagId:tagId]) {
+            MWLogInfo(@"Deleting geofence: %@", region.identifier);
+            [_locationManager stopMonitoringForRegion:region];
+            continue;
+        }
+        
+        // this shouldn't happen but from experience it does, so worth logging
+        if (![tagsOld containsTagId:tagId]) {
+            MWLogWarning(@"Deleting unknown geofence: %@", region.identifier);
+            [_locationManager stopMonitoringForRegion:region];
+            continue;
+        }
+    }
+    
+    NSArray *tagsRevealed = [tagsNew subarrayOfTagsNotIn:tagsOld];
+    for (NSDictionary *tag in tagsRevealed) {
         CLLocationDegrees lat = [tag[@"lat"] doubleValue];
         CLLocationDegrees lng = [tag[@"lng"] doubleValue];
         NSString *tagId = tag[@"id"];
@@ -201,18 +224,7 @@ typedef NS_ENUM(NSUInteger, PHLocationUpdateMode) {
                                                              radius:kPHRegionTagRadius
                                                          identifier:tagId];
         [_locationManager startMonitoringForRegion:region];
-    }
-}
-
-// although the documentation states that by monitoring a region with the same identifier as an existing region, the
-// new region will replace the existing region, in practice this wasn't happending and monitoring for the existing
-// region had to be explicitly stopped
-//
-- (void)destroyTagGeofences
-{
-    MWLogInfo(@"Destroying geofences");
-    for (CLRegion *region in _locationManager.monitoredRegions) {
-        [_locationManager stopMonitoringForRegion:region];
+        MWLogInfo(@"Created geofence: %@", region.identifier);
     }
 }
 

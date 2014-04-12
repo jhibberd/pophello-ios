@@ -11,6 +11,7 @@
 		0D0E039618D154BC009B604E /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D0E039518D154BC009B604E /* CoreData.framework */; };
 		0D0E039918D154CE009B604E /* PopHello.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0D0E039718D154CE009B604E /* PopHello.xcdatamodeld */; };
 		0D1A90C51892656B009636D0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0D1A90C41892656B009636D0 /* Localizable.strings */; };
+		0D2C848B18F91A0A005B85CE /* NSArray+PHArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D2C848A18F91A0A005B85CE /* NSArray+PHArray.m */; };
 		0D6488D418CD45B6002FFD3E /* PHTagCreate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D6488D318CD45B6002FFD3E /* PHTagCreate.m */; };
 		0D70C4241895FD3B0043ED68 /* UIColor+PHColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D70C4231895FD3B0043ED68 /* UIColor+PHColor.m */; };
 		0D7824DA18DAC27100F28481 /* PHLogRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D7824D918DAC27100F28481 /* PHLogRecorder.m */; };
@@ -65,6 +66,8 @@
 		0D0E039518D154BC009B604E /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		0D0E039818D154CE009B604E /* PopHello.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PopHello.xcdatamodel; sourceTree = "<group>"; };
 		0D1A90C41892656B009636D0 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		0D2C848918F91A0A005B85CE /* NSArray+PHArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+PHArray.h"; sourceTree = "<group>"; };
+		0D2C848A18F91A0A005B85CE /* NSArray+PHArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+PHArray.m"; sourceTree = "<group>"; };
 		0D6488D218CD45B6002FFD3E /* PHTagCreate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHTagCreate.h; sourceTree = "<group>"; };
 		0D6488D318CD45B6002FFD3E /* PHTagCreate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHTagCreate.m; sourceTree = "<group>"; };
 		0D70C4221895FD3B0043ED68 /* UIColor+PHColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+PHColor.h"; sourceTree = "<group>"; };
@@ -173,6 +176,8 @@
 				0D7824D918DAC27100F28481 /* PHLogRecorder.m */,
 				0DA60FAC18E81CF7004E09B1 /* UIFont+PHFont.h */,
 				0DA60FAD18E81CF7004E09B1 /* UIFont+PHFont.m */,
+				0D2C848918F91A0A005B85CE /* NSArray+PHArray.h */,
+				0D2C848A18F91A0A005B85CE /* NSArray+PHArray.m */,
 			);
 			name = Utility;
 			sourceTree = "<group>";
@@ -479,6 +484,7 @@
 				0D7824DA18DAC27100F28481 /* PHLogRecorder.m in Sources */,
 				0DA60FB718E8262C004E09B1 /* PHAnimationView.m in Sources */,
 				0D70C4241895FD3B0043ED68 /* UIColor+PHColor.m in Sources */,
+				0D2C848B18F91A0A005B85CE /* NSArray+PHArray.m in Sources */,
 				0DA60FB118E8206C004E09B1 /* PHPending.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

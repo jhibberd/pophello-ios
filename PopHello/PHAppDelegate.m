@@ -37,7 +37,7 @@
     // send usage stats and error reports to a third party server to analysis
     [BugSenseController sharedControllerWithBugSenseAPIKey:@"5b8a5499" userDictionary:nil sendImmediately:YES];
     
-    //[PHLogRecorder record];
+    [PHLogRecorder record];
     MWLogInfo(@"Application launched");
     
     // manually set the root view controller to the main view controller so that the "unavailable" view controller
@@ -117,7 +117,7 @@
 // Handle the user submitting a request to the server to create a new tag.
 //
 // If the app is in the background when this message is received ignore it because we don't want to stop monitoring for
-// significant location updates and there is no point in updating the UI. Althought this is unlikely in this handler
+// significant location updates and there is no point in updating the UI. Although this is unlikely in this handler
 // because the latency between the user submitting a request and this delegate receiving the message doesn't leave much
 // of an opportunity for the app to be made inactive.
 //
@@ -160,21 +160,27 @@
 
 #pragma mark - Region Events
 
-// Notify the user that a tag region has been entered.
+// Handle the device entering a tag geofence.
 //
-// This is only ever called when the app is running in the background.
+// If the app is in the background dispatch a notification, otherwise take no action. The Zone Manager will have
+// already updated the necessary resources in response to this event.
 //
 - (void)didEnterTagRegion:(NSDictionary *)tag
 {
+    if ([UIApplication sharedApplication].applicationState != UIApplicationStateBackground) {
+        return;
+    }
     MWLogInfo(@"Dispatching a local notification (tag=%@)", tag[@"id"]);
     dispatch_async(dispatch_get_main_queue(), ^{
         [PHTagNotification present:tag];
     });
 }
 
-// Notify the user that a tag region has been exited.
+// Handle the device exiting a tag geofence.
 //
-// This is only ever called when the app is running in the background.
+// In theory this event can be ignored if the app is running in the foreground because notifications are cleared when
+// the app is launched by the user. For simplicity, and to be safe, notifications are dismissed regardless of app
+// state.
 //
 - (void)didExitTagRegion:(NSDictionary *)tag
 {
@@ -190,7 +196,7 @@
 {
     MWLogInfo(@"Service did become available");
     [self.window.rootViewController dismissViewControllerAnimated:NO completion:nil]; // dismiss unavailable
-    //[_zoneManager startBuildingZone];
+    // TODO: begin building the zone?
 }
 
 - (void)zoneServiceDidBecomeUnavailable:(PHZoneServiceRequirement)missing

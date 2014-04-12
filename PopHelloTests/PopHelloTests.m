@@ -7,6 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
+#import "NSArray+PHArray.h"
 
 @interface PopHelloTests : XCTestCase
 
@@ -26,9 +27,9 @@
     [super tearDown];
 }
 
-- (void)testExample
+// NOTE: unit tests don't work when logging is redirected to the filesystem
+- (void)testSomething
 {
-    XCTFail(@"No implementation for \"%s\"", __PRETTY_FUNCTION__);
 }
 
 @end

@@ -8,7 +8,6 @@
 - (void)startMonitoringSignificantLocationChanges;
 - (void)startMonitoringPreciseLocationChanges;
 - (void)stopMonitoringLocation;
-- (void)buildTagGeofences:(NSArray *)tags;
-- (void)destroyTagGeofences;
+- (void)updateGeofencesFromTags:(NSArray *)tagsOld toTags:(NSArray *)tagsNew;
 - (void)triggerEnterTagRegionForFirstTagContainingCoordinate:(CLLocationCoordinate2D)coordinate;
 @end

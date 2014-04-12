@@ -1,5 +1,6 @@
 
 #import "MWLogging.h"
+#import "NSArray+PHArray.h"
 #import "PHLocationService.h"
 #import "PHZoneManager.h"
 #import "PHZoneServiceAvailabilityMonitor.h"
@@ -64,7 +65,6 @@ typedef NS_ENUM(NSUInteger, PHLocationUpdateMode) {
         case kPHLocationUpdateModePrecise:
             return;
         case kPHLocationUpdateModeSignificant:
-            [self stopMonitoringSignificantLocationChanges];
             break;
         case kPHLocationUpdateModeNone:
             break;
@@ -80,18 +80,12 @@ typedef NS_ENUM(NSUInteger, PHLocationUpdateMode) {
             [self stopMonitoringPreciseLocationChanges];
             break;
         case kPHLocationUpdateModeSignificant:
-            [self stopMonitoringSignificantLocationChanges];
             break;
         case kPHLocationUpdateModeNone:
             return;
     }
     [_locationService stopMonitoringLocation];
     _locationUpdateMode = kPHLocationUpdateModeNone;
-}
-
-- (void)stopMonitoringSignificantLocationChanges
-{
-    [self clearZone];
 }
 
 - (void)stopMonitoringPreciseLocationChanges
@@ -102,23 +96,6 @@ typedef NS_ENUM(NSUInteger, PHLocationUpdateMode) {
 - (BOOL)performPreliminaryServiceAvailabilityChecks
 {
     return [_serviceAvailabilityMonitor performPreliminaryChecks];
-}
-
-// Clear the zone.
-//
-// Either because significant region monitoring has stopped and so we can't be sure of the accuracy of existing tags or
-// because new tag data has been received and we need to clear the existing zone in preparation for creating a new one.
-//
-- (void)clearZone
-{
-    // TODO: don't we need to clear the tag notification too? perhaps another call to app delegate?
-    // TODO: perhaps need to think what happens if transitioning to new zone and still in same tag, don't want it to
-    // bounce
-    [_locationService destroyTagGeofences];
-    [_tagsStore clear];
-    // TODO: might be a bug here; what if the user is still in the same tag region when moving to a new zone?
-    // TODO: dismiss notifications too, but not here
-    [_tagActiveStore clear];
 }
 
 - (CLLocationCoordinate2D)getLastPreciseLocation
@@ -145,8 +122,7 @@ typedef NS_ENUM(NSUInteger, PHLocationUpdateMode) {
     _backgroundTaskQueryServer = [application beginBackgroundTaskWithExpirationHandler:^{
         
         // this block must exit quickly to prevent the app being killed by the OS
-        MWLogWarning(@"Failed to establish new zone within allocated background time; starting location updates");
-        [_locationService destroyTagGeofences];
+        MWLogWarning(@"Failed to establish new zone within allocated background time");
         [application endBackgroundTask:_backgroundTaskQueryServer];
         _backgroundTaskQueryServer = UIBackgroundTaskInvalid;
         
@@ -165,7 +141,7 @@ typedef NS_ENUM(NSUInteger, PHLocationUpdateMode) {
         UIBackgroundTaskIdentifier taskId = _backgroundTaskQueryServer;
         
         // query server for tags (which takes a non-trivial amount of time)
-        [_server queryForZoneTags:center successHandler:^(NSArray *tags) {
+        [_server queryForZoneTags:center successHandler:^(NSArray *tagsNew) {
             
             // check the task is still valid (see comment above)
             if (taskId != _backgroundTaskQueryServer) {
@@ -176,22 +152,28 @@ typedef NS_ENUM(NSUInteger, PHLocationUpdateMode) {
             
             // TODO check that the service is still available
             
-            // If the device has moved outside the region since establishing the zone then discard the zone and start
-            // location the device again. This is because a zone established with the device already outside it will
-            // never trigger an event for the device leaving the region and so zones will cease to be updated.
-            // Background location updates are terminated along with this background task.
-            [self clearZone];
-            [_locationService buildTagGeofences:tags];
-            [_tagsStore put:tags];
-            MWLogInfo(@"Established zone (lat=%f, lng=%f, tags=%d)", center.latitude, center.longitude, [tags count]);
-            [_locationService triggerEnterTagRegionForFirstTagContainingCoordinate:center];
+            // update the zone with the new tags
+            NSArray *tagsOld = [_tagsStore fetchAll];
+            [_tagsStore clear];
+            [_tagsStore put:tagsNew];
+            NSDictionary *tagActive = [_tagActiveStore fetch];
+            BOOL keepTagActive = tagActive != nil && [tagsNew containsTagId:tagActive[@"id"]];
+            if (!keepTagActive && tagActive != nil) {
+                [_tagActiveStore clear];
+            }
+            [_locationService updateGeofencesFromTags:tagsOld toTags:tagsNew];
+            if (!keepTagActive) {
+                [_locationService triggerEnterTagRegionForFirstTagContainingCoordinate:center];
+            }
             
+            MWLogInfo(@"Zone old tags: %@", tagsOld);
+            MWLogInfo(@"Zone new tags: %@", tagsNew);
+            MWLogInfo(@"Zone established at %f, %f", center.latitude, center.longitude);
             [application endBackgroundTask:_backgroundTaskQueryServer];
             _backgroundTaskQueryServer = UIBackgroundTaskInvalid;
 
         } errorHandler:^(NSDictionary *response) {
             MWLogError(@"Server error while building zone");
-            [_locationService destroyTagGeofences];
             [application endBackgroundTask:_backgroundTaskQueryServer];
             _backgroundTaskQueryServer = UIBackgroundTaskInvalid;
             
