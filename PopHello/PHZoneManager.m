@@ -2,6 +2,7 @@
 #import "MWLogging.h"
 #import "NSArray+PHArray.h"
 #import "PHLocationService.h"
+#import "PHTagNotification.h"
 #import "PHZoneManager.h"
 #import "PHZoneServiceAvailabilityMonitor.h"
 
@@ -149,26 +150,9 @@ typedef NS_ENUM(NSUInteger, PHLocationUpdateMode) {
                 // technically it's already been terminated so no use in calling `endBackgroundTask`
                 return;
             }
-            
             // TODO check that the service is still available
             
-            // update the zone with the new tags
-            NSArray *tagsOld = [_tagsStore fetchAll];
-            [_tagsStore clear];
-            [_tagsStore put:tagsNew];
-            NSDictionary *tagActive = [_tagActiveStore fetch];
-            BOOL keepTagActive = tagActive != nil && [tagsNew containsTagId:tagActive[@"id"]];
-            if (!keepTagActive && tagActive != nil) {
-                [_tagActiveStore clear];
-            }
-            [_locationService updateGeofencesFromTags:tagsOld toTags:tagsNew];
-            if (!keepTagActive) {
-                [_locationService triggerEnterTagRegionForFirstTagContainingCoordinate:center];
-            }
-            
-            MWLogInfo(@"Zone old tags: %@", tagsOld);
-            MWLogInfo(@"Zone new tags: %@", tagsNew);
-            MWLogInfo(@"Zone established at %f, %f", center.latitude, center.longitude);
+            [self updateZoneWithTags:tagsNew location:center];
             [application endBackgroundTask:_backgroundTaskQueryServer];
             _backgroundTaskQueryServer = UIBackgroundTaskInvalid;
 
@@ -180,6 +164,29 @@ typedef NS_ENUM(NSUInteger, PHLocationUpdateMode) {
         }];
         
     });
+}
+
+- (void)updateZoneWithTags:(NSArray *)tagsNew location:(CLLocationCoordinate2D)center
+{
+    NSArray *tagsOld = [_tagsStore fetchAll];
+    [_tagsStore clear];
+    [_tagsStore put:tagsNew];
+    NSDictionary *tagActive = [_tagActiveStore fetch];
+    BOOL keepTagActive = tagActive != nil && [tagsNew containsTagId:tagActive[@"id"]];
+    if (!keepTagActive && tagActive != nil) {
+        [_tagActiveStore clear];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [PHTagNotification dismissAll];
+        });
+    }
+    [_locationService updateGeofencesFromTags:tagsOld toTags:tagsNew];
+    if (!keepTagActive) {
+        [_locationService triggerEnterTagRegionForFirstTagContainingCoordinate:center];
+    }
+    
+    MWLogInfo(@"Zone old tags: %@", tagsOld);
+    MWLogInfo(@"Zone new tags: %@", tagsNew);
+    MWLogInfo(@"Zone established at %f, %f", center.latitude, center.longitude);
 }
 
 - (void)deviceDidUpdatePreciseLocation:(CLLocationCoordinate2D)center
