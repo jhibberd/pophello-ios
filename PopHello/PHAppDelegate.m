@@ -2,20 +2,23 @@
 #import <BugSense-iOS/BugSenseController.h>
 #import "MWLogging.h"
 #import "PHAppDelegate.h"
+#import "PHLocationService.h"
 #import "PHLogRecorder.h"
 #import "PHMainViewController.h"
 #import "PHServer.h"
+#import "PHServiceAvailabilityMonitor.h"
 #import "PHStoreManager.h"
 #import "PHTagNotification.h"
 #import "PHTagsStore.h"
-#import "PHUnavailableViewController.h"
 #import "PHZoneManager.h"
 
 @implementation PHAppDelegate {
+    PHLocationService *_locationService;
     PHZoneManager *_zoneManager;
     PHServer *_server;
     PHStoreManager *_storeManager;
     PHMainViewController *_mainView;
+    PHServiceAvailabilityMonitor *_serviceAvailabilityMonitor;
 }
 
 #pragma mark - Application
@@ -37,7 +40,7 @@
     // send usage stats and error reports to a third party server to analysis
     [BugSenseController sharedControllerWithBugSenseAPIKey:@"5b8a5499" userDictionary:nil sendImmediately:YES];
     
-    [PHLogRecorder record];
+    //[PHLogRecorder record];
     MWLogInfo(@"Application launched");
     
     // manually set the root view controller to the main view controller so that the "unavailable" view controller
@@ -46,14 +49,21 @@
     self.window.rootViewController = _mainView;
     [self.window makeKeyAndVisible];
     
+    _serviceAvailabilityMonitor = [[PHServiceAvailabilityMonitor alloc] initWithDelegate:self];
     _server = [[PHServer alloc] init];
     _storeManager = [[PHStoreManager alloc] init];
-    PHTagsStore *tagsStore = [[PHTagsStore alloc] initWithStoreManager:_storeManager];
-    PHTagActiveStore *tagActiveStore = [[PHTagActiveStore alloc] initWithStoreManager:_storeManager];
-    _zoneManager = [[PHZoneManager alloc] initWithTagsStore:tagsStore tagActiveStore:tagActiveStore server:_server];
+    PHTagsStore *tagsStore = [[PHTagsStore alloc] initWithStoreManager:_storeManager
+                                            serviceAvailabilityMonitor:_serviceAvailabilityMonitor];
+    PHTagActiveStore *tagActiveStore = [[PHTagActiveStore alloc] initWithStoreManager:_storeManager
+                                                           serviceAvailabilityMonitor:_serviceAvailabilityMonitor];
+    _locationService = [[PHLocationService alloc] initWithServiceAvailabilityMonitor:_serviceAvailabilityMonitor];
+    _zoneManager = [[PHZoneManager alloc] initWithTagsStore:tagsStore
+                                             tagActiveStore:tagActiveStore
+                                            locationService:_locationService
+                                                     server:_server];
+    _locationService.delegate = _zoneManager;
     _zoneManager.delegate = self;
-    [_zoneManager performPreliminaryServiceAvailabilityChecks];
-    
+
     return YES;
 }
 
@@ -70,12 +80,31 @@
 // not possible to ensure they are still relevant. This happens automatically in the logic below but needs to be a
 // consideration if refactored.
 //
+// When the app is in the background it isn't always notified of changes that affect the availability of the service
+// so always check when the app becomes active.
+//
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     MWLogInfo(@"Application did become active");
-    
     [PHTagNotification dismissAll];
-    
+    [_serviceAvailabilityMonitor checkAvailability];
+    switch ([_serviceAvailabilityMonitor availability]) {
+        case PHServiceAvailabilityStatePending:
+            [_locationService promptUserForAuthorization];
+            break;
+        case PHServiceAvailabilityStateAvailable:
+            [self initUI];
+            break;
+        case PHServiceAvailabilityStateUnavailable:
+            [_mainView presentServiceUnavailable:[_serviceAvailabilityMonitor getMostRelevantHumanErrorMessage]];
+            break;
+    }
+}
+
+// Initialise the user interface based on the current state of the zone.
+//
+- (void)initUI
+{
     NSDictionary *tagActive = [_zoneManager getActiveTag];
     if (tagActive == nil) {
         MWLogInfo(@"showing create view");
@@ -98,9 +127,15 @@
 // the main controller. This isn't animated because at this point it's invisible to the user and this method must
 // complete fast to avoid the app from being killed by the OS.
 //
+// If the service isn't available when resigning active state there is no point attempting to monitor for significant
+// location updates or update the UI.
+//
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     MWLogInfo(@"Application will resign active");
+    if ([_serviceAvailabilityMonitor availability] != PHServiceAvailabilityStateAvailable) {
+        return;
+    }
     [_zoneManager startMonitoringSignificantLocationChanges];
     [_mainView presentNothing];
 }
@@ -190,29 +225,33 @@
 }
 
 
-#pragma mark - Zone Service Availability Events
+#pragma mark - Service Availability Events
 
-- (void)zoneServiceDidBecomeAvailable
+// Respond to the service becoming available.
+//
+// If the app is active then load the user interface from the zone (which at this point should be empty). If the app
+// is in the background then resume monitoring for significant location updates.
+//
+- (void)serviceDidBecomeAvailable
 {
-    MWLogInfo(@"Service did become available");
-    [self.window.rootViewController dismissViewControllerAnimated:NO completion:nil]; // dismiss unavailable
-    // TODO: begin building the zone?
+    if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
+        [self initUI];
+    } else {
+        [_zoneManager startMonitoringSignificantLocationChanges];
+    }
 }
 
-- (void)zoneServiceDidBecomeUnavailable:(PHZoneServiceRequirement)missing
+// TODO: this isn't working and there's a bug where if Location Services is disabled while the server is being
+// contacted this method gets called while the app is in the background but if Location Services is then enabled
+// (while the app is still in the background) then when the app is started there are two background tasks both
+// querying the server.
+
+- (void)serviceDidBecomeUnavailable
 {
-    // TODO this isn't working and there's a bug where if Location Services is disabled while the server is being
-    // contacted this method gets called while the app is in the background but if Location Services is then enabled
-    // (while the app is still in the background) then when the app is started there are two background tasks both
-    // querying the server.
-    
-    // the zone service has become availably so reset the UI back to an initial state
-    MWLogWarning(@"Service did become unavailable");
-    [_mainView presentNothing]; // TODO: perhaps show "service unavailable" view
-    
-    // notify the user by presenting an appropriate view
-    UIViewController *view = [[PHUnavailableViewController alloc] initWithMissingZoneServiceRequirement:missing];
-    [self.window.rootViewController presentViewController:view animated:NO completion:nil];
+    // TODO: [_zoneManager stopAndClear];
+    if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
+        [_mainView presentServiceUnavailable:[_serviceAvailabilityMonitor getMostRelevantHumanErrorMessage]];
+    }
 }
 
 @end

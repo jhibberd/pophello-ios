@@ -1,2 +1,2 @@
 /* Localized versions of Info.plist keys */
-
+NSLocationUsageDescription = "Your location is used to let you know which tags are around you.";

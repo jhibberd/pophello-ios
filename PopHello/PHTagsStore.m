@@ -7,13 +7,16 @@ static NSString *const kPHEntity = @"Tag";
 //
 @implementation PHTagsStore {
     PHStoreManager *_storeManager;
+    PHServiceAvailabilityMonitor *_serviceAvailabilityMonitor;
 }
 
 - (id)initWithStoreManager:(PHStoreManager *)storeManager
+    serviceAvailabilityMonitor:(PHServiceAvailabilityMonitor *)serviceAvailabilityMonitor
 {
     self = [super init];
     if (self) {
         _storeManager = storeManager;
+        _serviceAvailabilityMonitor = serviceAvailabilityMonitor;
     }
     return self;
 }
@@ -35,7 +38,7 @@ static NSString *const kPHEntity = @"Tag";
     }
     NSError *error;
     if (![_storeManager.managedObjectContext save:&error]) {
-        NSLog(@"Failed to save tag managed objects: %@", [error localizedDescription]);
+        [_serviceAvailabilityMonitor localStorageDidFail:error];
     }
 }
 
@@ -55,7 +58,7 @@ static NSString *const kPHEntity = @"Tag";
     NSError *error;
     NSArray *fetchedObjects = [_storeManager.managedObjectContext executeFetchRequest:fetchRequest error:&error];
     if (error) {
-        NSLog(@"Failed to fetch tag managed objects: %@", [error localizedDescription]);
+        [_serviceAvailabilityMonitor localStorageDidFail:error];
         return nil;
     }
     if ([fetchedObjects count] == 0) {
@@ -75,7 +78,7 @@ static NSString *const kPHEntity = @"Tag";
     NSError *error;
     NSArray *fetchedObjects = [_storeManager.managedObjectContext executeFetchRequest:fetchRequest error:&error];
     if (error) {
-        NSLog(@"Failed to fetch tag managed objects: %@", [error localizedDescription]);
+        [_serviceAvailabilityMonitor localStorageDidFail:error];
         return nil;
     }
     
@@ -99,7 +102,7 @@ static NSString *const kPHEntity = @"Tag";
     NSError *error;
     NSArray *fetchedObjects = [_storeManager.managedObjectContext executeFetchRequest:fetchRequest error:&error];
     if (error) {
-        NSLog(@"Failed to fetch tag managed objects: %@", [error localizedDescription]);
+        [_serviceAvailabilityMonitor localStorageDidFail:error];
         return;
     }
     for (NSManagedObject *object in fetchedObjects) {

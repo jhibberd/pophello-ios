@@ -6,13 +6,16 @@ static NSString *const kPHEntity = @"TagActive";
 
 @implementation PHTagActiveStore {
     PHStoreManager *_storeManager;
+    PHServiceAvailabilityMonitor *_serviceAvailabilityMonitor;
 }
 
 - (id)initWithStoreManager:(PHStoreManager *)storeManager
+    serviceAvailabilityMonitor:(PHServiceAvailabilityMonitor *)serviceAvailabilityMonitor
 {
     self = [super init];
     if (self) {
         _storeManager = storeManager;
+        _serviceAvailabilityMonitor = serviceAvailabilityMonitor;
     }
     return self;
 }
@@ -33,7 +36,7 @@ static NSString *const kPHEntity = @"TagActive";
     
     NSError *error;
     if (![_storeManager.managedObjectContext save:&error]) {
-        MWLogError(@"Failed to save active tag managed object: %@", [error localizedDescription]);
+        [_serviceAvailabilityMonitor localStorageDidFail:error];
     }
 }
 
@@ -51,7 +54,7 @@ static NSString *const kPHEntity = @"TagActive";
     NSError *error;
     NSArray *fetchedObjects = [_storeManager.managedObjectContext executeFetchRequest:fetchRequest error:&error];
     if (error) {
-        MWLogError(@"Failed to fetch active tag managed object: %@", [error localizedDescription]);
+        [_serviceAvailabilityMonitor localStorageDidFail:error];
         return nil;
     }
     if ([fetchedObjects count] == 0) {
@@ -97,7 +100,7 @@ static NSString *const kPHEntity = @"TagActive";
     NSError *error;
     NSArray *fetchedObjects = [_storeManager.managedObjectContext executeFetchRequest:fetchRequest error:&error];
     if (error) {
-        MWLogError(@"Failed to fetch active tag managed object: %@", [error localizedDescription]);
+        [_serviceAvailabilityMonitor localStorageDidFail:error];
         return;
     }
     for (NSManagedObject *object in fetchedObjects) {

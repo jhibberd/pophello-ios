@@ -6,9 +6,10 @@
 static CLLocationDistance const kPHRegionTagRadius = 100; // meters
 
 typedef NS_ENUM(NSUInteger, PHLocationUpdateMode) {
-    kPHLocationUpdateModeNone,
-    kPHLocationUpdateModeSignificant,
-    kPHLocationUpdateModePrecise
+    PHLocationUpdateModeNone,
+    PHLocationUpdateModePrompt,
+    PHLocationUpdateModeSignificant,
+    PHLocationUpdateModePrecise
 };
 
 // Provides the following location services:
@@ -20,16 +21,18 @@ typedef NS_ENUM(NSUInteger, PHLocationUpdateMode) {
 //
 @implementation PHLocationService {
     CLLocationManager *_locationManager;
+    PHServiceAvailabilityMonitor *_serviceAvailabilityMonitor;
     PHLocationUpdateMode _locationUpdateMode;
 }
 
-- (id)init
+- (id)initWithServiceAvailabilityMonitor:(PHServiceAvailabilityMonitor *)serviceAvailabilityMonitor
 {
     self = [super init];
     if (self) {
         _locationManager = [[CLLocationManager alloc] init];
         _locationManager.delegate = self;
-        _locationUpdateMode = kPHLocationUpdateModeNone;
+        _serviceAvailabilityMonitor = serviceAvailabilityMonitor;
+        _locationUpdateMode = PHLocationUpdateModeNone;
     }
     return self;
 }
@@ -46,16 +49,19 @@ typedef NS_ENUM(NSUInteger, PHLocationUpdateMode) {
 {
     MWLogInfo(@"Started monitoring significant location changes");
     switch (_locationUpdateMode) {
-        case kPHLocationUpdateModeNone:
+        case PHLocationUpdateModeNone:
             break;
-        case kPHLocationUpdateModePrecise:
+        case PHLocationUpdateModePrompt:
+            [self stopMonitoringLocationForUserPrompt];
+            break;
+        case PHLocationUpdateModePrecise:
             [self stopMonitoringPreciseLocationChanges];
             break;
-        case kPHLocationUpdateModeSignificant:
+        case PHLocationUpdateModeSignificant:
             return;
     }
     [_locationManager startMonitoringSignificantLocationChanges];
-    _locationUpdateMode = kPHLocationUpdateModeSignificant;
+    _locationUpdateMode = PHLocationUpdateModeSignificant;
 }
 
 // Start monitoring precise location updates using high power.
@@ -67,32 +73,54 @@ typedef NS_ENUM(NSUInteger, PHLocationUpdateMode) {
 {
     MWLogInfo(@"Started monitoring precise location changes");
     switch (_locationUpdateMode) {
-        case kPHLocationUpdateModeNone:
+        case PHLocationUpdateModeNone:
             break;
-        case kPHLocationUpdateModePrecise:
+        case PHLocationUpdateModePrompt:
+            [self stopMonitoringLocationForUserPrompt];
+            break;
+        case PHLocationUpdateModePrecise:
             return;
-        case kPHLocationUpdateModeSignificant:
+        case PHLocationUpdateModeSignificant:
             [self stopMonitoringSignificantLocationChanges];
             break;
     }
     [_locationManager startUpdatingLocation];
-    _locationUpdateMode = kPHLocationUpdateModePrecise;
+    _locationUpdateMode = PHLocationUpdateModePrecise;
+}
+
+// Begin requesting location updates so that the OS prompts the user to enable location services.
+//
+// As soon as a location update is received stop monitoring location updates. This method of monitoring location
+// updates will always be called first so there is no need to stop any existing monitoring.
+//
+- (void)promptUserForAuthorization
+{
+    [_locationManager startUpdatingLocation];
+    _locationUpdateMode = PHLocationUpdateModePrompt;
 }
 
 - (void)stopMonitoringLocation
 {
     MWLogInfo(@"Stopped monitoring location changes");
     switch (_locationUpdateMode) {
-        case kPHLocationUpdateModeNone:
+        case PHLocationUpdateModeNone:
             return;
-        case kPHLocationUpdateModePrecise:
+        case PHLocationUpdateModePrompt:
+            [self stopMonitoringLocationForUserPrompt];
+            break;
+        case PHLocationUpdateModePrecise:
             [self stopMonitoringPreciseLocationChanges];
             break;
-        case kPHLocationUpdateModeSignificant:
+        case PHLocationUpdateModeSignificant:
             [self stopMonitoringSignificantLocationChanges];
             break;
     }
-    _locationUpdateMode = kPHLocationUpdateModeNone;
+    _locationUpdateMode = PHLocationUpdateModeNone;
+}
+
+- (void)stopMonitoringLocationForUserPrompt
+{
+    [_locationManager stopUpdatingLocation];
 }
 
 - (void)stopMonitoringSignificantLocationChanges
@@ -116,16 +144,18 @@ typedef NS_ENUM(NSUInteger, PHLocationUpdateMode) {
               age);
     
     switch (_locationUpdateMode) {
-        case kPHLocationUpdateModeSignificant:
+        case PHLocationUpdateModeNone:
+            break; // ignore, not interested in location updates
+        case PHLocationUpdateModePrompt:
+            // we don't need the location, we just need to prompt the user
+            [self stopMonitoringLocation];
+            break;
+        case PHLocationUpdateModeSignificant:
             [self.delegate deviceDidUpdateSignificantLocation:location.coordinate];
             break;
-            
-        case kPHLocationUpdateModePrecise:
+        case PHLocationUpdateModePrecise:
             [self.delegate deviceDidUpdatePreciseLocation:location.coordinate];
             break;
-            
-        case kPHLocationUpdateModeNone:
-            break; // ignore, not interested in location updates
     }
 }
 
@@ -148,17 +178,7 @@ typedef NS_ENUM(NSUInteger, PHLocationUpdateMode) {
 
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
 {
-    MWLogWarning(@"Location services authorization status changed: %d", status);
-    switch (status) {
-        case kCLAuthorizationStatusAuthorized:
-            [self.delegate locationServicesDidChangeAuthorizationStatus:YES];
-            break;
-        case kCLAuthorizationStatusDenied:
-        case kCLAuthorizationStatusNotDetermined:
-        case kCLAuthorizationStatusRestricted:
-            [self.delegate locationServicesDidChangeAuthorizationStatus:NO];
-            break;
-    }
+    [_serviceAvailabilityMonitor locationAuthorizationStatusDidChange:status];
 }
 
 
@@ -184,8 +204,7 @@ typedef NS_ENUM(NSUInteger, PHLocationUpdateMode) {
 - (void)locationManager:(CLLocationManager *)manager monitoringDidFailForRegion:(CLRegion *)region
               withError:(NSError *)error
 {
-    MWLogError(@"Region monitoring failed: %@", [error localizedDescription]);
-    [self.delegate monitoringDidFailForRegion];
+    [_serviceAvailabilityMonitor regionMonitoringDidFail:error];
 }
 
 // Update the tag geofences being monitored.

@@ -7,6 +7,4 @@
 - (void)deviceDidUpdatePreciseLocation:(CLLocationCoordinate2D)center;
 - (void)didEnterTagRegion:(NSString *)tagId;
 - (void)didExitTagRegion:(NSString *)tagId;
-- (void)monitoringDidFailForRegion;
-- (void)locationServicesDidChangeAuthorizationStatus:(BOOL)authorized;
 @end

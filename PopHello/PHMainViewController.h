@@ -13,5 +13,6 @@
 - (void)presentTagCreationSuccess;
 - (void)presentTagCreationFailure;
 - (void)presentPending;
+- (void)presentServiceUnavailable:(NSString *)reason;
 - (void)presentNothing;
 @end

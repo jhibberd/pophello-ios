@@ -1,10 +1,8 @@
 
 #import "MWLogging.h"
 #import "NSArray+PHArray.h"
-#import "PHLocationService.h"
 #import "PHTagNotification.h"
 #import "PHZoneManager.h"
-#import "PHZoneServiceAvailabilityMonitor.h"
 
 typedef NS_ENUM(NSUInteger, PHLocationUpdateMode) {
     kPHLocationUpdateModeNone,
@@ -20,25 +18,22 @@ typedef NS_ENUM(NSUInteger, PHLocationUpdateMode) {
     PHTagsStore *_tagsStore;
     PHTagActiveStore *_tagActiveStore;
     CLLocationCoordinate2D _lastPreciseLocation;
-    PHZoneServiceAvailabilityMonitor *_serviceAvailabilityMonitor;
     UIBackgroundTaskIdentifier _backgroundTaskQueryServer;
     PHLocationUpdateMode _locationUpdateMode;
 }
 
 - (id)initWithTagsStore:(PHTagsStore *)tagsStore
          tagActiveStore:(PHTagActiveStore *)tagActiveStore
+        locationService:(PHLocationService *)locationService
                  server:(PHServer *)server
 {
     self = [super init];
     if (self) {
         
-        _locationService = [[PHLocationService alloc] init];
-        _locationService.delegate = self;
+        _locationService = locationService;
         _server = server;
         _tagsStore = tagsStore;
         _tagActiveStore = tagActiveStore;
-        _serviceAvailabilityMonitor = [[PHZoneServiceAvailabilityMonitor alloc] init];
-        _serviceAvailabilityMonitor.delegate = self;
         _lastPreciseLocation = kCLLocationCoordinate2DInvalid;
         _locationUpdateMode = kPHLocationUpdateModeNone;
     }
@@ -92,11 +87,6 @@ typedef NS_ENUM(NSUInteger, PHLocationUpdateMode) {
 - (void)stopMonitoringPreciseLocationChanges
 {
     _lastPreciseLocation = kCLLocationCoordinate2DInvalid;
-}
-
-- (BOOL)performPreliminaryServiceAvailabilityChecks
-{
-    return [_serviceAvailabilityMonitor performPreliminaryChecks];
 }
 
 - (CLLocationCoordinate2D)getLastPreciseLocation
@@ -224,29 +214,6 @@ typedef NS_ENUM(NSUInteger, PHLocationUpdateMode) {
     }
     [_tagActiveStore clearIfActive:tag];
     [self.delegate didExitTagRegion:tag];
-}
-
-- (void)monitoringDidFailForRegion
-{
-    _serviceAvailabilityMonitor.isRegionMonitoringAvailable = NO;
-}
-
-- (void)locationServicesDidChangeAuthorizationStatus:(BOOL)authorized
-{
-    _serviceAvailabilityMonitor.isLocationServicesAuthorized = authorized;
-}
-
-
-#pragma mark - PHZoneServiceAvailabilityMonitorDelegate
-
-- (void)zoneServiceDidBecomeAvailable
-{
-    [self.delegate zoneServiceDidBecomeAvailable];
-}
-
-- (void)zoneServiceDidBecomeUnavailable:(PHZoneServiceRequirement)missing
-{
-    [self.delegate zoneServiceDidBecomeUnavailable:missing];
 }
 
 @end

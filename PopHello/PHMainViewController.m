@@ -2,6 +2,7 @@
 #import "PHMainViewController.h"
 #import "PHAnimationView.h"
 #import "PHPending.h"
+#import "PHServiceUnavailable.h"
 #import "PHTagCreate.h"
 #import "PHTagCreateFailure.h"
 #import "PHTagCreateSuccess.h"
@@ -92,6 +93,13 @@ static CGFloat const kPHViewHeight = 190;
 {
     _identifierActive = @"pending";
     _viewActive = [[PHPending alloc] initWithFrame:_animationViewFrame];
+    [self animateUIToMatchState];
+}
+
+- (void)presentServiceUnavailable:(NSString *)reason
+{
+    _identifierActive = @"service-unavailable";
+    _viewActive = [[PHServiceUnavailable alloc] initWithFrame:_animationViewFrame reason:reason];
     [self animateUIToMatchState];
 }
 

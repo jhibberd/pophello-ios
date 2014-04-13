@@ -11,3 +11,10 @@
 "LOCATION_UNKNOWN" = "Can't find your location, try again in a few seconds";
 "TAG_VIEW_OK" = "Ok";
 "PENDING" = "Thinking...";
+"SERVICE_UNAVAILABLE_IS_REGION_MONITORING_SUPPORTED_BY_DEVICE" = "Region monitoring is not supported by your device.";
+"SERVICE_UNAVAILABLE_IS_MULTITASKING_SUPPORT_BY_DEVICE" = "MultiTasking is not supported by your device.";
+"SERVICE_UNAVAILABLE_IS_BACKGROUND_APP_REFRESH_AVAILABLE" = "Background App Refresh has not been enabled.";
+"SERVICE_UNAVAILABLE_IS_REGION_MONITORING_AVAILABLE" = "Region monitoring failed.";
+"SERVICE_UNAVAILABLE_IS_LOCATION_SERVICES_AUTHORIZED" = "Location services has not been authorized for this app.";
+"SERVICE_UNAVAILABLE_IS_LOCATION_SERVICES_ENABLED" = "Location services has not been enabled.";
+"SERVICE_UNAVAILABLE_IS_LOCAL_STORAGE_AVAILABLE" = "Local storage is unavailable.";
