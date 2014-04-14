@@ -1,6 +1,8 @@
 
 #import "MWLogging.h"
 #import "NSArray+PHArray.h"
+#import "PHTagActiveStore.h"
+#import "PHTagsStore.h"
 #import "PHTagNotification.h"
 #import "PHZoneManager.h"
 
@@ -20,28 +22,29 @@ typedef NS_ENUM(NSUInteger, PHLocationUpdateMode) {
     CLLocationCoordinate2D _lastPreciseLocation;
     UIBackgroundTaskIdentifier _backgroundTaskQueryServer;
     PHLocationUpdateMode _locationUpdateMode;
+    BOOL _isOffline;
 }
 
-- (id)initWithTagsStore:(PHTagsStore *)tagsStore
-         tagActiveStore:(PHTagActiveStore *)tagActiveStore
-        locationService:(PHLocationService *)locationService
-                 server:(PHServer *)server
+- (id)initWithStoreManager:(PHStoreManager *)storeManager
+           locationService:(PHLocationService *)locationService
+                    server:(PHServer *)server
 {
     self = [super init];
     if (self) {
-        
         _locationService = locationService;
         _server = server;
-        _tagsStore = tagsStore;
-        _tagActiveStore = tagActiveStore;
+        _tagsStore = [[PHTagsStore alloc] initWithStoreManager:storeManager];
+        _tagActiveStore = [[PHTagActiveStore alloc] initWithStoreManager:storeManager];
         _lastPreciseLocation = kCLLocationCoordinate2DInvalid;
         _locationUpdateMode = kPHLocationUpdateModeNone;
+        _isOffline = YES;
     }
     return self;
 }
 
 - (void)startMonitoringSignificantLocationChanges
 {
+    _isOffline = NO;
     switch (_locationUpdateMode) {
         case kPHLocationUpdateModePrecise:
             [self stopMonitoringPreciseLocationChanges];
@@ -57,6 +60,7 @@ typedef NS_ENUM(NSUInteger, PHLocationUpdateMode) {
 
 - (void)startMonitoringPreciseLocationChanges
 {
+    _isOffline = NO;
     switch (_locationUpdateMode) {
         case kPHLocationUpdateModePrecise:
             return;
@@ -71,6 +75,7 @@ typedef NS_ENUM(NSUInteger, PHLocationUpdateMode) {
 
 - (void)stopMonitoringLocationChanges
 {
+    _isOffline = NO;
     switch (_locationUpdateMode) {
         case kPHLocationUpdateModePrecise:
             [self stopMonitoringPreciseLocationChanges];
@@ -99,6 +104,20 @@ typedef NS_ENUM(NSUInteger, PHLocationUpdateMode) {
     return [_tagActiveStore fetch];
 }
 
+// Stop all activity and clear all state.
+//
+// This happens in response to the service becoming unavailable. After calling this method the only part of the Zone
+// Manager that may still be active is a pending server request. The request callback first checks whether the Zone
+// Manager is still online before processing the server response.
+//
+- (void)offline
+{
+    _isOffline = YES;
+    [self stopMonitoringLocationChanges];
+    [_locationService removeAllGeofences];
+    [_tagActiveStore clear];
+    [_tagsStore clear];
+}
 
 #pragma mark - PHLocationManagerDelegate
 
@@ -140,9 +159,11 @@ typedef NS_ENUM(NSUInteger, PHLocationUpdateMode) {
                 // technically it's already been terminated so no use in calling `endBackgroundTask`
                 return;
             }
-            // TODO check that the service is still available
-            
-            [self updateZoneWithTags:tagsNew location:center];
+            if (_isOffline) {
+                MWLogInfo(@"Ignore server response; Zone Manager is offline");
+            } else {
+                [self updateZoneWithTags:tagsNew location:center];
+            }
             [application endBackgroundTask:_backgroundTaskQueryServer];
             _backgroundTaskQueryServer = UIBackgroundTaskInvalid;
 
@@ -150,7 +171,6 @@ typedef NS_ENUM(NSUInteger, PHLocationUpdateMode) {
             MWLogError(@"Server error while building zone");
             [application endBackgroundTask:_backgroundTaskQueryServer];
             _backgroundTaskQueryServer = UIBackgroundTaskInvalid;
-            
         }];
         
     });

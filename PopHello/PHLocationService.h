@@ -11,5 +11,6 @@
 - (void)startMonitoringPreciseLocationChanges;
 - (void)stopMonitoringLocation;
 - (void)updateGeofencesFromTags:(NSArray *)tagsOld toTags:(NSArray *)tagsNew;
+- (void)removeAllGeofences;
 - (void)triggerEnterTagRegionForFirstTagContainingCoordinate:(CLLocationCoordinate2D)coordinate;
 @end

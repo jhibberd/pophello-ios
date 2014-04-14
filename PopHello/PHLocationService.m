@@ -217,6 +217,17 @@ typedef NS_ENUM(NSUInteger, PHLocationUpdateMode) {
     }
 }
 
+// Remove all geofences.
+//
+// This is in response to the service becoming unavailable.
+//
+- (void)removeAllGeofences
+{
+    for (CLRegion *region in _locationManager.monitoredRegions) {
+        [_locationManager stopMonitoringForRegion:region];
+    }
+}
+
 // Check whether any tags contain the current device and dispatch a geofence enter event if they do.
 //
 // Core Location doesn't trigger a region boundary crossing if the device is currently inside the geofence when it's

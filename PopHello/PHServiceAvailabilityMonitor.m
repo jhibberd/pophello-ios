@@ -1,6 +1,5 @@
 
 #import "MWLogging.h"
-#import <CoreLocation/CoreLocation.h>
 #import "PHServiceAvailabilityMonitor.h"
 
 @implementation PHServiceAvailabilityMonitor {

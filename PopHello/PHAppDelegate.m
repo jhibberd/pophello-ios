@@ -9,7 +9,6 @@
 #import "PHServiceAvailabilityMonitor.h"
 #import "PHStoreManager.h"
 #import "PHTagNotification.h"
-#import "PHTagsStore.h"
 #import "PHZoneManager.h"
 
 @implementation PHAppDelegate {
@@ -50,17 +49,12 @@
     [self.window makeKeyAndVisible];
     
     _serviceAvailabilityMonitor = [[PHServiceAvailabilityMonitor alloc] initWithDelegate:self];
+    _storeManager = [[PHStoreManager alloc] initWithServiceAvailabilityMonitor:_serviceAvailabilityMonitor];
     _server = [[PHServer alloc] init];
-    _storeManager = [[PHStoreManager alloc] init];
-    PHTagsStore *tagsStore = [[PHTagsStore alloc] initWithStoreManager:_storeManager
-                                            serviceAvailabilityMonitor:_serviceAvailabilityMonitor];
-    PHTagActiveStore *tagActiveStore = [[PHTagActiveStore alloc] initWithStoreManager:_storeManager
-                                                           serviceAvailabilityMonitor:_serviceAvailabilityMonitor];
     _locationService = [[PHLocationService alloc] initWithServiceAvailabilityMonitor:_serviceAvailabilityMonitor];
-    _zoneManager = [[PHZoneManager alloc] initWithTagsStore:tagsStore
-                                             tagActiveStore:tagActiveStore
-                                            locationService:_locationService
-                                                     server:_server];
+    _zoneManager = [[PHZoneManager alloc] initWithStoreManager:_storeManager
+                                               locationService:_locationService
+                                                        server:_server];
     _locationService.delegate = _zoneManager;
     _zoneManager.delegate = self;
 
@@ -235,14 +229,9 @@
     }
 }
 
-// TODO: this isn't working and there's a bug where if Location Services is disabled while the server is being
-// contacted this method gets called while the app is in the background but if Location Services is then enabled
-// (while the app is still in the background) then when the app is started there are two background tasks both
-// querying the server.
-
 - (void)serviceDidBecomeUnavailable
 {
-    // TODO: [_zoneManager stopAndClear];
+    [_zoneManager offline];
     if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
         [_mainView presentServiceUnavailable:[_serviceAvailabilityMonitor getMostRelevantHumanErrorMessage]];
     }
