@@ -7,7 +7,6 @@ static CLLocationDistance const kPHRegionTagRadius = 100; // meters
 
 typedef NS_ENUM(NSUInteger, PHLocationUpdateMode) {
     PHLocationUpdateModeNone,
-    PHLocationUpdateModePrompt,
     PHLocationUpdateModeSignificant,
     PHLocationUpdateModePrecise
 };
@@ -51,9 +50,6 @@ typedef NS_ENUM(NSUInteger, PHLocationUpdateMode) {
     switch (_locationUpdateMode) {
         case PHLocationUpdateModeNone:
             break;
-        case PHLocationUpdateModePrompt:
-            [self stopMonitoringLocationForUserPrompt];
-            break;
         case PHLocationUpdateModePrecise:
             [self stopMonitoringPreciseLocationChanges];
             break;
@@ -75,9 +71,6 @@ typedef NS_ENUM(NSUInteger, PHLocationUpdateMode) {
     switch (_locationUpdateMode) {
         case PHLocationUpdateModeNone:
             break;
-        case PHLocationUpdateModePrompt:
-            [self stopMonitoringLocationForUserPrompt];
-            break;
         case PHLocationUpdateModePrecise:
             return;
         case PHLocationUpdateModeSignificant:
@@ -88,26 +81,12 @@ typedef NS_ENUM(NSUInteger, PHLocationUpdateMode) {
     _locationUpdateMode = PHLocationUpdateModePrecise;
 }
 
-// Begin requesting location updates so that the OS prompts the user to enable location services.
-//
-// As soon as a location update is received stop monitoring location updates. This method of monitoring location
-// updates will always be called first so there is no need to stop any existing monitoring.
-//
-- (void)promptUserForAuthorization
-{
-    [_locationManager startUpdatingLocation];
-    _locationUpdateMode = PHLocationUpdateModePrompt;
-}
-
 - (void)stopMonitoringLocation
 {
     MWLogInfo(@"Stopped monitoring location changes");
     switch (_locationUpdateMode) {
         case PHLocationUpdateModeNone:
             return;
-        case PHLocationUpdateModePrompt:
-            [self stopMonitoringLocationForUserPrompt];
-            break;
         case PHLocationUpdateModePrecise:
             [self stopMonitoringPreciseLocationChanges];
             break;
@@ -116,11 +95,6 @@ typedef NS_ENUM(NSUInteger, PHLocationUpdateMode) {
             break;
     }
     _locationUpdateMode = PHLocationUpdateModeNone;
-}
-
-- (void)stopMonitoringLocationForUserPrompt
-{
-    [_locationManager stopUpdatingLocation];
 }
 
 - (void)stopMonitoringSignificantLocationChanges
@@ -146,10 +120,6 @@ typedef NS_ENUM(NSUInteger, PHLocationUpdateMode) {
     switch (_locationUpdateMode) {
         case PHLocationUpdateModeNone:
             break; // ignore, not interested in location updates
-        case PHLocationUpdateModePrompt:
-            // we don't need the location, we just need to prompt the user
-            [self stopMonitoringLocation];
-            break;
         case PHLocationUpdateModeSignificant:
             [self.delegate deviceDidUpdateSignificantLocation:location.coordinate];
             break;

@@ -15,7 +15,7 @@
     BOOL _isLocationServicesEnabled;
     BOOL _isLocalStorageAvailable;
     
-    PHServiceAvailabilityState _availability;
+    BOOL _isAvailable;
 }
 
 - (id)initWithDelegate:(id<PHServiceAvailabilityDelegate>)delegate
@@ -35,7 +35,7 @@
         _isRegionMonitoringAvailable = YES;
         _isLocalStorageAvailable = YES;
         
-        _availability = PHServiceAvailabilityStateUnavailable;
+        _isAvailable = NO;
         
         // subscribe to settings changes
         [[NSNotificationCenter defaultCenter] addObserver:self
@@ -48,9 +48,9 @@
 
 // Return the current availability state of the service.
 //
-- (PHServiceAvailabilityState)availability
+- (BOOL)isAvailable
 {
-    return _availability;
+    return _isAvailable;
 }
 
 // If the service is unavailable return the most relevant human-friendly error message to be display in the main UI.
@@ -140,12 +140,18 @@
 
 // Location Services must be authorized for this app by the user.
 //
+// If the user hasn't yet determined whether they want to authorize location services for the app assume that they
+// will. The first time location services are requested by the app the user will be prompted. If they reject the
+// request the authorization status will be changed and the UI will be updated accordingly.
+//
 // This is a setting that can be changed by the user unless the setting is restricted (eg. by parental controls).
 // Changes to this user setting are monitored by the app.
 //
 - (void)checkIsLocationServicesAuthorized
 {
-    _isLocationServicesAuthorized = [CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized;
+    CLAuthorizationStatus status = [CLLocationManager authorizationStatus];
+    _isLocationServicesAuthorized =
+        status == kCLAuthorizationStatusAuthorized || status == kCLAuthorizationStatusNotDetermined;
 }
 
 // Location service must be enabled on the device.
@@ -163,52 +169,24 @@
 
 - (void)updateAvailabilityAndNotifyDelegateIfChanged:(BOOL)notify
 {
-    BOOL isAvailableUpdated;
-    if ([self isFirstAvailabilityCheck]) {
-        isAvailableUpdated = PHServiceAvailabilityStatePending;
-    } else {
-        isAvailableUpdated =
-            _isRegionMonitoringSupportedByDevice &&
-            _isMultitaskingSupportedByDevice &&
-            _isBackgroundAppRefreshAvailable &&
-            _isRegionMonitoringAvailable &&
-            _isLocationServicesAuthorized &&
-            _isLocationServicesEnabled &&
-            _isLocalStorageAvailable ? PHServiceAvailabilityStateAvailable : PHServiceAvailabilityStateUnavailable;
-    }
-    BOOL changed = isAvailableUpdated == _availability;
-    _availability = isAvailableUpdated;
+    BOOL isAvailableUpdated =
+        _isRegionMonitoringSupportedByDevice &&
+        _isMultitaskingSupportedByDevice &&
+        _isBackgroundAppRefreshAvailable &&
+        _isRegionMonitoringAvailable &&
+        _isLocationServicesAuthorized &&
+        _isLocationServicesEnabled &&
+        _isLocalStorageAvailable;
+    BOOL changed = isAvailableUpdated == _isAvailable;
+    _isAvailable = isAvailableUpdated;
     if (changed && notify) {
-        switch (_availability) {
-            case PHServiceAvailabilityStateAvailable:
-                MWLogInfo(@"Service did become available");
-                [_delegate serviceDidBecomeAvailable];
-                break;
-            case PHServiceAvailabilityStateUnavailable:
-                MWLogInfo(@"Service did become unavailable");
-                [_delegate serviceDidBecomeUnavailable];
-                break;
-            case PHServiceAvailabilityStatePending:
-                // shouldn't happen, `notify` will always be NO for the first check
-                break;
+        if (_isAvailable) {
+            MWLogInfo(@"Service did become available");
+            [_delegate serviceDidBecomeAvailable];
+        } else {
+            MWLogInfo(@"Service did become unavailable");
+            [_delegate serviceDidBecomeUnavailable];
         }
-    }
-}
-
-// Return whether this is the first time that a service availability test has been performed.
-//
-// This caters for iOS prompting the user to enable location services only the first time it is requested.
-//
-- (BOOL)isFirstAvailabilityCheck
-{
-    static NSString *const key = @"firstServiceAvailabilityCheck";
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if ([defaults boolForKey:key]) {
-        return NO;
-    } else {
-        [defaults setBool:YES forKey:key];
-        [defaults synchronize];
-        return YES;
     }
 }
 
@@ -241,10 +219,10 @@
     MWLogWarning(@"Location authorization status changed: %d", status);
     switch (status) {
         case kCLAuthorizationStatusAuthorized:
+        case kCLAuthorizationStatusNotDetermined:
             _isLocationServicesAuthorized = YES;
             break;
         case kCLAuthorizationStatusDenied:
-        case kCLAuthorizationStatusNotDetermined:
         case kCLAuthorizationStatusRestricted:
             _isLocationServicesAuthorized = NO;
             break;

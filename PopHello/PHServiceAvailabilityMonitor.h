@@ -3,15 +3,9 @@
 #import <Foundation/Foundation.h>
 #import "PHServiceAvailabilityDelegate.h"
 
-typedef NS_ENUM(NSUInteger, PHServiceAvailabilityState) {
-    PHServiceAvailabilityStatePending,
-    PHServiceAvailabilityStateAvailable,
-    PHServiceAvailabilityStateUnavailable
-};
-
 @interface PHServiceAvailabilityMonitor : NSObject
 - (id)initWithDelegate:(id<PHServiceAvailabilityDelegate>)delegate;
-- (PHServiceAvailabilityState)availability;
+- (BOOL)isAvailable;
 - (NSString *)getMostRelevantHumanErrorMessage;
 - (void)checkAvailability;
 - (void)regionMonitoringDidFail:(NSError *)error;

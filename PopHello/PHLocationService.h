@@ -9,7 +9,6 @@
 @property (nonatomic, weak) id<PHLocationServiceDelegate> delegate;
 - (void)startMonitoringSignificantLocationChanges;
 - (void)startMonitoringPreciseLocationChanges;
-- (void)promptUserForAuthorization;
 - (void)stopMonitoringLocation;
 - (void)updateGeofencesFromTags:(NSArray *)tagsOld toTags:(NSArray *)tagsNew;
 - (void)triggerEnterTagRegionForFirstTagContainingCoordinate:(CLLocationCoordinate2D)coordinate;

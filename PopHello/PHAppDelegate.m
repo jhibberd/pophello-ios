@@ -88,16 +88,10 @@
     MWLogInfo(@"Application did become active");
     [PHTagNotification dismissAll];
     [_serviceAvailabilityMonitor checkAvailability];
-    switch ([_serviceAvailabilityMonitor availability]) {
-        case PHServiceAvailabilityStatePending:
-            [_locationService promptUserForAuthorization];
-            break;
-        case PHServiceAvailabilityStateAvailable:
-            [self initUI];
-            break;
-        case PHServiceAvailabilityStateUnavailable:
-            [_mainView presentServiceUnavailable:[_serviceAvailabilityMonitor getMostRelevantHumanErrorMessage]];
-            break;
+    if ([_serviceAvailabilityMonitor isAvailable]) {
+        [self initUI];
+    } else {
+        [_mainView presentServiceUnavailable:[_serviceAvailabilityMonitor getMostRelevantHumanErrorMessage]];
     }
 }
 
@@ -133,11 +127,11 @@
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     MWLogInfo(@"Application will resign active");
-    if ([_serviceAvailabilityMonitor availability] != PHServiceAvailabilityStateAvailable) {
+    if (![_serviceAvailabilityMonitor isAvailable]) {
         return;
     }
     [_zoneManager startMonitoringSignificantLocationChanges];
-    [_mainView presentNothing];
+    //[_mainView presentNothing];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
