@@ -9,8 +9,8 @@
 #import "PHTagView.h"
 #import "UIColor+PHColor.h"
 
-static CGFloat const kPHTopMargin = 35;
-static CGFloat const kPHViewHeight = 190;
+static CGFloat const kPHTopMargin = 30;
+static CGFloat const kPHViewHeight = 295;
 
 @interface PHMainViewController ()
 @end

@@ -39,7 +39,7 @@
     // send usage stats and error reports to a third party server to analysis
     [BugSenseController sharedControllerWithBugSenseAPIKey:@"5b8a5499" userDictionary:nil sendImmediately:YES];
     
-    //[PHLogRecorder record];
+    [PHLogRecorder record];
     MWLogInfo(@"Application launched");
     
     // manually set the root view controller to the main view controller so that the "unavailable" view controller

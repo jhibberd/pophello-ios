@@ -1,6 +1,7 @@
 
 #import <CoreLocation/CoreLocation.h>
 #import "PHTagCreate.h"
+#import "PHUserView.h"
 #import "UIColor+PHColor.h"
 #import "UIFont+PHFont.h"
 
@@ -26,10 +27,13 @@
         _textView.font = [UIFont ph_primaryFont];
         _textView.backgroundColor = [UIColor ph_contentBackgroundColor];
         _textView.textColor = [UIColor ph_mainTextColor];
-        _textView.textContainer.lineFragmentPadding = 10; // to match UILabel padding
+        _textView.textContainer.lineFragmentPadding = 20; // to match UILabel padding
         _textView.scrollEnabled = NO; // otherwise layout constraints don't work
         [_textView becomeFirstResponder];
         [self addSubview:_textView];
+
+        PHUserView *userView = [[PHUserView alloc] init];
+        [self addSubview:userView];
         
         _button = [[UIButton alloc] init];
         _button.backgroundColor = [UIColor ph_contentBackgroundColor];
@@ -43,9 +47,11 @@
         
         _textView.translatesAutoresizingMaskIntoConstraints = NO;
         _button.translatesAutoresizingMaskIntoConstraints = NO;
-        NSDictionary *bindings = NSDictionaryOfVariableBindings(self, _textView, _button);
-        NSArray *fmts = @[@"V:|[_textView]-(>=0)-[_button(55)]|",
+        userView.translatesAutoresizingMaskIntoConstraints = NO;
+        NSDictionary *bindings = NSDictionaryOfVariableBindings(self, _textView, _button, userView);
+        NSArray *fmts = @[@"V:|-10-[_textView]-(>=0)-[userView]-[_button(55)]|",
                           @"|[_textView]|",
+                          @"|-20-[userView]-20-|",
                           @"|[_button]|",
                           [NSString stringWithFormat:@"[self(%f)]", self.frame.size.width],     // fill width
                           [NSString stringWithFormat:@"V:[self(%f)]", self.frame.size.height]]; // fill height

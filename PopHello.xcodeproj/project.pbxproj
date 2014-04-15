@@ -33,6 +33,8 @@
 		0DADA24A189E133000AFA25C /* PHServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DADA249189E133000AFA25C /* PHServer.m */; };
 		0DADD5B318DFD79C00E6DD78 /* BugSense-iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DADD5B218DFD79C00E6DD78 /* BugSense-iOS.framework */; };
 		0DB062CB18D3D4CA00F08C3B /* PHTagsStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DB062CA18D3D4CA00F08C3B /* PHTagsStore.m */; };
+		0DBE76C218FCDCD100EC32D4 /* PHUserView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DBE76C118FCDCD100EC32D4 /* PHUserView.m */; };
+		0DBE76C818FD08E400EC32D4 /* UIImage+PHImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DBE76C718FD08E400EC32D4 /* UIImage+PHImage.m */; };
 		0DBE7CD21897442300074E96 /* PHTagView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DBE7CD11897442300074E96 /* PHTagView.m */; };
 		0DE54207188E3E85004F72E9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DE54206188E3E85004F72E9 /* Foundation.framework */; };
 		0DE54209188E3E85004F72E9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DE54208188E3E85004F72E9 /* CoreGraphics.framework */; };
@@ -112,6 +114,10 @@
 		0DB062C918D3D4CA00F08C3B /* PHTagsStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHTagsStore.h; sourceTree = "<group>"; };
 		0DB062CA18D3D4CA00F08C3B /* PHTagsStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHTagsStore.m; sourceTree = "<group>"; };
 		0DB062CC18D3EDFB00F08C3B /* MockRoute.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = MockRoute.gpx; path = ../MockRoute.gpx; sourceTree = "<group>"; };
+		0DBE76C018FCDCD100EC32D4 /* PHUserView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHUserView.h; sourceTree = "<group>"; };
+		0DBE76C118FCDCD100EC32D4 /* PHUserView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHUserView.m; sourceTree = "<group>"; };
+		0DBE76C618FD08E400EC32D4 /* UIImage+PHImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+PHImage.h"; sourceTree = "<group>"; };
+		0DBE76C718FD08E400EC32D4 /* UIImage+PHImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+PHImage.m"; sourceTree = "<group>"; };
 		0DBE7CD01897442300074E96 /* PHTagView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHTagView.h; sourceTree = "<group>"; };
 		0DBE7CD11897442300074E96 /* PHTagView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHTagView.m; sourceTree = "<group>"; };
 		0DC3D13318E8FAD500C2FFF9 /* PHAnimationViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PHAnimationViewDelegate.h; sourceTree = "<group>"; };
@@ -177,6 +183,8 @@
 				0DA60FAD18E81CF7004E09B1 /* UIFont+PHFont.m */,
 				0D2C848918F91A0A005B85CE /* NSArray+PHArray.h */,
 				0D2C848A18F91A0A005B85CE /* NSArray+PHArray.m */,
+				0DBE76C618FD08E400EC32D4 /* UIImage+PHImage.h */,
+				0DBE76C718FD08E400EC32D4 /* UIImage+PHImage.m */,
 			);
 			name = Utility;
 			sourceTree = "<group>";
@@ -230,6 +238,15 @@
 			name = Data;
 			sourceTree = "<group>";
 		};
+		0DBE76BF18FCDC9800EC32D4 /* Component */ = {
+			isa = PBXGroup;
+			children = (
+				0DBE76C018FCDCD100EC32D4 /* PHUserView.h */,
+				0DBE76C118FCDCD100EC32D4 /* PHUserView.m */,
+			);
+			name = Component;
+			sourceTree = "<group>";
+		};
 		0DBE7CCE189743CC00074E96 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -245,6 +262,7 @@
 		0DBE7CCF189743E200074E96 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				0DBE76BF18FCDC9800EC32D4 /* Component */,
 				0DACA7CE18E26979000297EB /* Animation */,
 				0DBE7CD01897442300074E96 /* PHTagView.h */,
 				0DBE7CD11897442300074E96 /* PHTagView.m */,
@@ -458,6 +476,7 @@
 				0DACA7CD18E267D8000297EB /* PHTagCreateSuccess.m in Sources */,
 				0DE54217188E3E85004F72E9 /* PHAppDelegate.m in Sources */,
 				0DADA23D189C8CFE00AFA25C /* MWLogging.m in Sources */,
+				0DBE76C218FCDCD100EC32D4 /* PHUserView.m in Sources */,
 				0DA60FAE18E81CF7004E09B1 /* UIFont+PHFont.m in Sources */,
 				0DA99130189237B700194290 /* PHMainViewController.m in Sources */,
 				0D6488D418CD45B6002FFD3E /* PHTagCreate.m in Sources */,
@@ -467,6 +486,7 @@
 				0DACA7CA18E10F66000297EB /* PHStoreManager.m in Sources */,
 				0DB062CB18D3D4CA00F08C3B /* PHTagsStore.m in Sources */,
 				0D2C849218FA70D5005B85CE /* PHServiceUnavailable.m in Sources */,
+				0DBE76C818FD08E400EC32D4 /* UIImage+PHImage.m in Sources */,
 				0DADA244189E049300AFA25C /* PHZoneManager.m in Sources */,
 				0DACA7D818E27753000297EB /* PHTagCreateFailure.m in Sources */,
 				0D0E039918D154CE009B604E /* PopHello.xcdatamodeld in Sources */,

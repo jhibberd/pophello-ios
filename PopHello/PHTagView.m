@@ -1,5 +1,6 @@
 
 #import "PHTagView.h"
+#import "PHUserView.h"
 #import "UIColor+PHColor.h"
 #import "UIFont+PHFont.h"
 
@@ -21,6 +22,9 @@
         textLabel.text = tag[@"text"];
         [self addSubview:textLabel];
         
+        PHUserView *userView = [[PHUserView alloc] init];
+        [self addSubview:userView];
+        
         UIButton *button = [[UIButton alloc] init];
         button.backgroundColor = [UIColor ph_contentBackgroundColor];
         button.titleLabel.font = [UIFont ph_primaryFont];
@@ -31,9 +35,11 @@
         // define layout
         textLabel.translatesAutoresizingMaskIntoConstraints = NO;
         button.translatesAutoresizingMaskIntoConstraints = NO;
-        NSDictionary *bindings = NSDictionaryOfVariableBindings(self, textLabel, button);
-        NSArray *fmts = @[@"V:|-15-[textLabel]-(>=15)-[button(55)]|",
+        userView.translatesAutoresizingMaskIntoConstraints = NO;
+        NSDictionary *bindings = NSDictionaryOfVariableBindings(self, textLabel, button, userView);
+        NSArray *fmts = @[@"V:|-15-[textLabel]-(>=15)-[userView]-[button(55)]|",
                           @"|-15-[textLabel]-15-|",
+                          @"|-20-[userView]-20-|",
                           @"|[button]|",
                           [NSString stringWithFormat:@"[self(%f)]", self.frame.size.width],     // fill width
                           [NSString stringWithFormat:@"V:[self(%f)]", self.frame.size.height]]; // fill height
