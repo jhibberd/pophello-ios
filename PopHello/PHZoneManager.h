@@ -18,4 +18,5 @@
 - (void)offline;
 - (CLLocationCoordinate2D)getLastPreciseLocation;
 - (NSDictionary *)getActiveTag;
+- (void)removeTag:(NSString *)tagID;
 @end

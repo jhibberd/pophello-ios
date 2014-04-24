@@ -6,16 +6,13 @@
 
 @implementation PHUserView
 
-- (id)initWithFrame:(CGRect)frame
+- (id)initWithName:(NSString *)name imageURL:(NSString *)imageURL
 {
     self = [super initWithFrame:CGRectNull];
     if (self) {
         
         static CGFloat const userImageSize = 50;
-        
-        NSString *URLString = @"https://fbcdn-profile-a.akamaihd.net/hprofile-ak-ash3/t1.0-1/c25.28.155.155/s50x50/946522_10151756173271454_1228308319_a.jpg";
-        NSURL *url = [NSURL URLWithString:URLString];
-        
+        NSURL *url = [NSURL URLWithString:imageURL];
         UIImage *imagePlaceholder = [UIImage imageWithColor:[UIColor ph_userImagePlaceholderColor] size:userImageSize];
         UIImageView *avatar = [[UIImageView alloc] initWithImage:imagePlaceholder];
         avatar.layer.cornerRadius = userImageSize / 2;
@@ -23,7 +20,7 @@
         [self addSubview:avatar];
         
         UILabel *labelName = [[UILabel alloc] init];
-        labelName.text = @"James Hibberd";
+        labelName.text = name;
         labelName.font = [UIFont ph_usernameFont];
         labelName.textColor = [UIColor ph_usernameTextColor];
         labelName.textAlignment = NSTextAlignmentCenter;
@@ -33,6 +30,7 @@
         labelName.translatesAutoresizingMaskIntoConstraints = NO;
         NSDictionary *bindings = NSDictionaryOfVariableBindings(self, avatar, labelName);
         NSArray *fmts = @[[NSString stringWithFormat:@"V:|[avatar(%f)]-10-[labelName]|", userImageSize],
+                          [NSString stringWithFormat:@"|-(>=0)-[avatar(%f)]-(>=0)-|", userImageSize],
                           @"|[labelName]|"];
         for (NSString *fmt in fmts) {
             [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:fmt

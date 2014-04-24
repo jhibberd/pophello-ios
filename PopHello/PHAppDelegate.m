@@ -11,6 +11,8 @@
 #import "PHTagNotification.h"
 #import "PHZoneManager.h"
 
+static NSString *const kPHPropertyUserID = @"UserID";
+
 @implementation PHAppDelegate {
     PHLocationService *_locationService;
     PHZoneManager *_zoneManager;
@@ -48,9 +50,13 @@
     self.window.rootViewController = _mainView;
     [self.window makeKeyAndVisible];
     
+    // read values from the bundle required for initialising the core objects
+    NSBundle *bundle = [NSBundle mainBundle];
+    NSString *userID = [bundle objectForInfoDictionaryKey:kPHPropertyUserID];
+    
     _serviceAvailabilityMonitor = [[PHServiceAvailabilityMonitor alloc] initWithDelegate:self];
     _storeManager = [[PHStoreManager alloc] initWithServiceAvailabilityMonitor:_serviceAvailabilityMonitor];
-    _server = [[PHServer alloc] init];
+    _server = [[PHServer alloc] initWithUserID:userID];
     _locationService = [[PHLocationService alloc] initWithServiceAvailabilityMonitor:_serviceAvailabilityMonitor];
     _zoneManager = [[PHZoneManager alloc] initWithStoreManager:_storeManager
                                                locationService:_locationService
@@ -101,7 +107,7 @@
     } else {
         MWLogInfo(@"showing tag view");
         [_zoneManager stopMonitoringLocationChanges];
-        [_mainView presentTagView:tagActive];
+        [_mainView presentTagView:tagActive server:_server delegate:self];
     }
 }
 
@@ -144,7 +150,7 @@
 // because the latency between the user submitting a request and this delegate receiving the message doesn't leave much
 // of an opportunity for the app to be made inactive.
 //
-- (void)newTagCreationWasSubmitted
+- (void)tagCreationWasSubmitted
 {
     if ([UIApplication sharedApplication].applicationState != UIApplicationStateActive) {
         return;
@@ -157,7 +163,7 @@
 // If the app is in the background when this message is received ignore it because we don't want to stop monitoring for
 // significant location updates and there is no point in updating the UI.
 //
-- (void)newTagCreationDidSucceed
+- (void)tagCreationDidSucceed
 {
     if ([UIApplication sharedApplication].applicationState != UIApplicationStateActive) {
         return;
@@ -171,13 +177,50 @@
 // If the app is in the background when this message is received ignore it because we don't want to stop monitoring for
 // significant location updates and there is no point in updating the UI.
 //
-- (void)newTagCreationDidFail
+- (void)tagCreationDidFail
 {
-    if ([UIApplication sharedApplication].applicationState != UIApplicationStateActive) {
+    if ([UIApplication sharedApplication].applicationState != UIApplicationStateActive ||
+        ![_serviceAvailabilityMonitor isAvailable]) {
         return;
     }
     [_zoneManager stopMonitoringLocationChanges];
-    [_mainView presentTagCreationFailure];
+    [_mainView presentServerError];
+}
+
+// Handle the user submitting a request to the server to acknowledge a tag.
+//
+- (void)tagAcknowledgementWasSubmitted
+{
+    if ([UIApplication sharedApplication].applicationState != UIApplicationStateActive ||
+        ![_serviceAvailabilityMonitor isAvailable]) {
+        return;
+    }
+    [_mainView presentPending];
+}
+
+// Handle the user successfully acknowledging a tag.
+//
+- (void)tagAcknowledgementDidSucceed:(NSString *)tagID
+{
+    [_zoneManager removeTag:tagID];
+    if ([UIApplication sharedApplication].applicationState != UIApplicationStateActive ||
+        ![_serviceAvailabilityMonitor isAvailable]) {
+        return;
+    }
+    [_mainView presentTagCreate:_zoneManager server:_server delegate:self];
+    [_zoneManager startMonitoringPreciseLocationChanges];
+}
+
+// Handle an error occurring when the user tried to acknowledge a tag.
+//
+- (void)tagAcknowledgementDidFail
+{
+    if ([UIApplication sharedApplication].applicationState != UIApplicationStateActive ||
+        ![_serviceAvailabilityMonitor isAvailable]) {
+        return;
+    }
+    [_zoneManager stopMonitoringLocationChanges];
+    [_mainView presentServerError];
 }
 
 

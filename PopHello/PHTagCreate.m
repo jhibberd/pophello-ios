@@ -5,6 +5,7 @@
 #import "UIColor+PHColor.h"
 #import "UIFont+PHFont.h"
 
+
 @implementation PHTagCreate {
     UITextView *_textView;
     UIButton *_button;
@@ -32,7 +33,7 @@
         [_textView becomeFirstResponder];
         [self addSubview:_textView];
 
-        PHUserView *userView = [[PHUserView alloc] init];
+        PHUserView *userView = [[PHUserView alloc] initWithName:[self getUserID] imageURL:[self getUserImageURL]];
         [self addSubview:userView];
         
         _button = [[UIButton alloc] init];
@@ -98,21 +99,33 @@
     [_textView setEditable:NO];
     [_button setEnabled:NO];
     dispatch_async(dispatch_get_main_queue(), ^{
-        [_delegate newTagCreationWasSubmitted];
+        [_delegate tagCreationWasSubmitted];
     });
     
     [_server postTagAt:location
                   text:text
         successHandler:^{
             dispatch_async(dispatch_get_main_queue(), ^{
-                [_delegate newTagCreationDidSucceed];
+                [_delegate tagCreationDidSucceed];
             });
         }
           errorHandler:^(NSDictionary *response) {
               dispatch_async(dispatch_get_main_queue(), ^{
-                  [_delegate newTagCreationDidFail];
+                  [_delegate tagCreationDidFail];
               });
           }];
+}
+
+- (NSString *)getUserID
+{
+    NSBundle *bundle = [NSBundle mainBundle];
+    return [bundle objectForInfoDictionaryKey:@"UserID"];
+}
+
+- (NSString *)getUserImageURL
+{
+    NSBundle *bundle = [NSBundle mainBundle];
+    return [bundle objectForInfoDictionaryKey:@"UserImageURL"];
 }
 
 @end

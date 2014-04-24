@@ -1,9 +1,9 @@
 
-#import "PHTagCreateFailure.h"
+#import "PHServerError.h"
 #import "UIColor+PHColor.h"
 #import "UIFont+PHFont.h"
 
-@implementation PHTagCreateFailure
+@implementation PHServerError
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -18,7 +18,7 @@
         textLabel.backgroundColor = [UIColor ph_failureBackgroundColor];
         textLabel.textColor = [UIColor ph_failureTextColor];
         textLabel.numberOfLines = 0;
-        textLabel.text = NSLocalizedString(@"TAG_CREATE_FAILURE", nil);
+        textLabel.text = NSLocalizedString(@"SERVER_ERROR", nil);
         [self addSubview:textLabel];
         
         // define layout

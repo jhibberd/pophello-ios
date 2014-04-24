@@ -4,17 +4,33 @@
 
 static NSString *const kPHPropertyServerHost = @"ServerHost";
 
-@implementation PHServer
+@implementation PHServer {
+    NSString *_userID;
+}
 
+// Init
+//
+// All server API calls take place within the context of a user.
+//
+- (id)initWithUserID:(NSString *)userID
+{
+    self = [super init];
+    if (self) {
+        _userID = userID;
+    }
+    return self;
+}
 
 #pragma mark - Endpoints
 
 // Return data for a set of tags near the current device's location.
+//
 - (void)queryForZoneTags:(CLLocationCoordinate2D)center
           successHandler:(void (^)(NSArray *tags))successHandler
             errorHandler:(void (^)(NSDictionary *response))errorHandler
 {    
-    NSString *query = [NSString stringWithFormat:@"lat=%f&lng=%f", center.latitude, center.longitude];
+    NSString *query = [NSString stringWithFormat:@"lat=%f&lng=%f&user_id=%@",
+                       center.latitude, center.longitude, _userID];
     NSURL *url = [self buildURLWithPath:@"/tags" query:query];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     
@@ -26,12 +42,14 @@ static NSString *const kPHPropertyServerHost = @"ServerHost";
 }
 
 // Post a new tag at the device's current location.
+//
 - (void)postTagAt:(CLLocationCoordinate2D)center
              text:(NSString *)text
    successHandler:(void (^)())successHandler
      errorHandler:(void (^)(NSDictionary *))errorHandler
 {
-    NSDictionary *body = @{@"lat": @(center.latitude),
+    NSDictionary *body = @{@"user_id": _userID,
+                           @"lat": @(center.latitude),
                            @"lng": @(center.longitude),
                            @"text": text};
     
@@ -55,6 +73,26 @@ static NSString *const kPHPropertyServerHost = @"ServerHost";
         
     } errorHandler:errorHandler];
 
+}
+
+// Acknowledge that the user has consumed a tag.
+//
+// The user won't be presented with the tag again and the author will be notified.
+//
+- (void)acknowledgeTag:(NSString *)tagId
+        successHandler:(void (^)())successHandler
+          errorHandler:(void (^)(NSDictionary *))errorHandler
+{
+    NSString *query = [NSString stringWithFormat:@"user_id=%@", _userID];
+    NSString *path = [NSString stringWithFormat:@"/tags/%@", tagId];
+    NSURL *url = [self buildURLWithPath:path query:query];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setHTTPMethod:@"DELETE"];
+    
+    [self dataTaskWithRequest:request successHandler:^(NSDictionary *response) {
+        successHandler();
+        
+    } errorHandler:errorHandler];
 }
 
 

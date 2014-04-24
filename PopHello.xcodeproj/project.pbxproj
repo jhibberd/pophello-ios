@@ -26,7 +26,7 @@
 		0DA99130189237B700194290 /* PHMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DA9912F189237B700194290 /* PHMainViewController.m */; };
 		0DACA7CA18E10F66000297EB /* PHStoreManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DACA7C918E10F66000297EB /* PHStoreManager.m */; };
 		0DACA7CD18E267D8000297EB /* PHTagCreateSuccess.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DACA7CC18E267D8000297EB /* PHTagCreateSuccess.m */; };
-		0DACA7D818E27753000297EB /* PHTagCreateFailure.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DACA7D718E27753000297EB /* PHTagCreateFailure.m */; };
+		0DACA7D818E27753000297EB /* PHServerError.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DACA7D718E27753000297EB /* PHServerError.m */; };
 		0DADA23D189C8CFE00AFA25C /* MWLogging.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DADA23C189C8CFE00AFA25C /* MWLogging.m */; };
 		0DADA241189C8D4E00AFA25C /* PHLocationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DADA23F189C8D4E00AFA25C /* PHLocationService.m */; };
 		0DADA244189E049300AFA25C /* PHZoneManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DADA243189E049300AFA25C /* PHZoneManager.m */; };
@@ -68,6 +68,7 @@
 		0D0E039518D154BC009B604E /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		0D0E039818D154CE009B604E /* PopHello.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PopHello.xcdatamodel; sourceTree = "<group>"; };
 		0D1A90C41892656B009636D0 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		0D262F4619061ACB001897A8 /* PHTagViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PHTagViewDelegate.h; sourceTree = "<group>"; };
 		0D2C848918F91A0A005B85CE /* NSArray+PHArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+PHArray.h"; sourceTree = "<group>"; };
 		0D2C848A18F91A0A005B85CE /* NSArray+PHArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+PHArray.m"; sourceTree = "<group>"; };
 		0D2C848C18FA48D4005B85CE /* PHServiceAvailabilityMonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHServiceAvailabilityMonitor.h; sourceTree = "<group>"; };
@@ -98,8 +99,8 @@
 		0DACA7CB18E267D8000297EB /* PHTagCreateSuccess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHTagCreateSuccess.h; sourceTree = "<group>"; };
 		0DACA7CC18E267D8000297EB /* PHTagCreateSuccess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHTagCreateSuccess.m; sourceTree = "<group>"; };
 		0DACA7D218E26CD5000297EB /* PHTagCreateDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PHTagCreateDelegate.h; sourceTree = "<group>"; };
-		0DACA7D618E27753000297EB /* PHTagCreateFailure.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHTagCreateFailure.h; sourceTree = "<group>"; };
-		0DACA7D718E27753000297EB /* PHTagCreateFailure.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHTagCreateFailure.m; sourceTree = "<group>"; };
+		0DACA7D618E27753000297EB /* PHServerError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHServerError.h; sourceTree = "<group>"; };
+		0DACA7D718E27753000297EB /* PHServerError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHServerError.m; sourceTree = "<group>"; };
 		0DADA23B189C8CFE00AFA25C /* MWLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWLogging.h; sourceTree = "<group>"; };
 		0DADA23C189C8CFE00AFA25C /* MWLogging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWLogging.m; sourceTree = "<group>"; };
 		0DADA23E189C8D4E00AFA25C /* PHLocationService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHLocationService.h; sourceTree = "<group>"; };
@@ -266,13 +267,14 @@
 				0DACA7CE18E26979000297EB /* Animation */,
 				0DBE7CD01897442300074E96 /* PHTagView.h */,
 				0DBE7CD11897442300074E96 /* PHTagView.m */,
+				0D262F4619061ACB001897A8 /* PHTagViewDelegate.h */,
 				0D6488D218CD45B6002FFD3E /* PHTagCreate.h */,
 				0D6488D318CD45B6002FFD3E /* PHTagCreate.m */,
 				0DACA7D218E26CD5000297EB /* PHTagCreateDelegate.h */,
 				0DACA7CB18E267D8000297EB /* PHTagCreateSuccess.h */,
 				0DACA7CC18E267D8000297EB /* PHTagCreateSuccess.m */,
-				0DACA7D618E27753000297EB /* PHTagCreateFailure.h */,
-				0DACA7D718E27753000297EB /* PHTagCreateFailure.m */,
+				0DACA7D618E27753000297EB /* PHServerError.h */,
+				0DACA7D718E27753000297EB /* PHServerError.m */,
 				0DA60FAF18E8206C004E09B1 /* PHPending.h */,
 				0DA60FB018E8206C004E09B1 /* PHPending.m */,
 				0D2C849018FA70D5005B85CE /* PHServiceUnavailable.h */,
@@ -488,7 +490,7 @@
 				0D2C849218FA70D5005B85CE /* PHServiceUnavailable.m in Sources */,
 				0DBE76C818FD08E400EC32D4 /* UIImage+PHImage.m in Sources */,
 				0DADA244189E049300AFA25C /* PHZoneManager.m in Sources */,
-				0DACA7D818E27753000297EB /* PHTagCreateFailure.m in Sources */,
+				0DACA7D818E27753000297EB /* PHServerError.m in Sources */,
 				0D0E039918D154CE009B604E /* PopHello.xcdatamodeld in Sources */,
 				0DBE7CD21897442300074E96 /* PHTagView.m in Sources */,
 				0D7824DA18DAC27100F28481 /* PHLogRecorder.m in Sources */,

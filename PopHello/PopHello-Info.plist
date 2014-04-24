@@ -2,8 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>Username</key>
-	<string>James</string>
+	<key>UserImageURL</key>
+	<string>https://graph.facebook.com/james.d.hibberd/picture?width=100&amp;height=100</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -44,5 +44,7 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
+	<key>UserID</key>
+	<string>James</string>
 </dict>
 </plist>

@@ -2,7 +2,7 @@
 #import <Foundation/Foundation.h>
 
 @protocol PHTagCreateDelegate <NSObject>
-- (void)newTagCreationWasSubmitted;
-- (void)newTagCreationDidSucceed;
-- (void)newTagCreationDidFail;
+- (void)tagCreationWasSubmitted;
+- (void)tagCreationDidSucceed;
+- (void)tagCreationDidFail;
 @end

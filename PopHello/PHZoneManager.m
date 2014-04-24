@@ -104,6 +104,17 @@ typedef NS_ENUM(NSUInteger, PHLocationUpdateMode) {
     return [_tagActiveStore fetch];
 }
 
+// Remove a tag from the zone.
+//
+// In response to a user acknowleding a tag.
+//
+- (void)removeTag:(NSString *)tagID
+{
+    [_tagActiveStore clearIfActive:tagID];
+    [_tagsStore remove:tagID];
+    [_locationService removeGeofence:tagID];
+}
+
 // Stop all activity and clear all state.
 //
 // This happens in response to the service becoming unavailable. After calling this method the only part of the Zone
@@ -232,7 +243,7 @@ typedef NS_ENUM(NSUInteger, PHLocationUpdateMode) {
         NSLog(@"Exited region for tag not found in local storage");
         return;
     }
-    [_tagActiveStore clearIfActive:tag];
+    [_tagActiveStore clearIfActive:tagId];
     [self.delegate didExitTagRegion:tag];
 }
 

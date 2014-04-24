@@ -4,7 +4,7 @@
 #import "PHPending.h"
 #import "PHServiceUnavailable.h"
 #import "PHTagCreate.h"
-#import "PHTagCreateFailure.h"
+#import "PHServerError.h"
 #import "PHTagCreateSuccess.h"
 #import "PHTagView.h"
 #import "UIColor+PHColor.h"
@@ -57,9 +57,14 @@ static CGFloat const kPHViewHeight = 295;
 }
 
 - (void)presentTagView:(NSDictionary *)tag
+                server:(PHServer *)server
+              delegate:(id<PHTagViewDelegate>)delegate
 {
     _identifierActive = [NSString stringWithFormat:@"tag-%@", tag[@"id"]];
-    _viewActive = [[PHTagView alloc] initWithFrame:_animationViewFrame tag:tag];
+    _viewActive = [[PHTagView alloc] initWithFrame:_animationViewFrame
+                                               tag:tag
+                                            server:server
+                                          delegate:delegate];
     [self animateUIToMatchState];
 }
 
@@ -82,10 +87,10 @@ static CGFloat const kPHViewHeight = 295;
     [self animateUIToMatchState];
 }
 
-- (void)presentTagCreationFailure
+- (void)presentServerError
 {
-    _identifierActive = @"tag-creation-failure";
-    _viewActive = [[PHTagCreateFailure alloc] initWithFrame:_animationViewFrame];
+    _identifierActive = @"server-error";
+    _viewActive = [[PHServerError alloc] initWithFrame:_animationViewFrame];
     [self animateUIToMatchState];
 }
 

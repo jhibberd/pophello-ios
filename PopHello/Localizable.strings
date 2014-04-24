@@ -7,9 +7,9 @@
 "OK" = "OK";
 "TAG_CREATE_SUBMIT" = "Post";
 "TAG_CREATE_SUCCESS" = "Tag posted";
-"TAG_CREATE_FAILURE" = "Oh-o, something went horribly wrong";
+"SERVER_ERROR" = "Uh oh, something went horribly wrong";
 "LOCATION_UNKNOWN" = "Can't find your location, try again in a few seconds";
-"TAG_VIEW_OK" = "Ok";
+"TAG_ACKNOWLEDGE" = "Ok";
 "PENDING" = "Thinking...";
 "SERVICE_UNAVAILABLE_IS_REGION_MONITORING_SUPPORTED_BY_DEVICE" = "Region monitoring is not supported by your device.";
 "SERVICE_UNAVAILABLE_IS_MULTITASKING_SUPPORT_BY_DEVICE" = "MultiTasking is not supported by your device.";

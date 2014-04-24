@@ -217,6 +217,19 @@ typedef NS_ENUM(NSUInteger, PHLocationUpdateMode) {
     }
 }
 
+// Remove a single tag geofence.
+//
+- (void)removeGeofence:(NSString *)tagID
+{
+    for (CLRegion *region in _locationManager.monitoredRegions) {
+        if ([region.identifier isEqualToString:tagID]) {
+            [_locationManager stopMonitoringForRegion:region];
+            return;
+        }
+    }
+    MWLogWarning(@"Attempted to remove single geofence but not found");
+}
+
 // Remove all geofences.
 //
 // This is in response to the service becoming unavailable.

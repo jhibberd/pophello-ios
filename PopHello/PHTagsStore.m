@@ -33,11 +33,10 @@ static NSString *const kPHEntity = @"Tag";
         [object setValue:tag[@"lat"] forKey:@"lat"];
         [object setValue:tag[@"lng"] forKey:@"lng"];
         [object setValue:tag[@"text"] forKey:@"text"];
+        [object setValue:tag[@"user_id"] forKey:@"user_id"];
+        [object setValue:tag[@"user_image_url"] forKey:@"user_image_url"];
     }
-    NSError *error;
-    if (![_storeManager.managedObjectContext save:&error]) {
-        MWLogError(@"%@", [error localizedDescription]);
-    }
+    [_storeManager saveContext];
 }
 
 // Return a tag by ID, or nil if it doesn't exist.
@@ -45,13 +44,13 @@ static NSString *const kPHEntity = @"Tag";
 // I believe Core Data implements managed object caching so it isn't necessary to implement our own and this call
 // should actually read from disk.
 //
-- (NSDictionary *)fetch:(NSString *)tagId
+- (NSDictionary *)fetch:(NSString *)tagID
 {
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription entityForName:kPHEntity
                                               inManagedObjectContext:_storeManager.managedObjectContext];
     [fetchRequest setEntity:entity];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"id == %@", tagId];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"id == %@", tagID];
     [fetchRequest setPredicate:predicate];
     NSError *error;
     NSArray *fetchedObjects = [_storeManager.managedObjectContext executeFetchRequest:fetchRequest error:&error];
@@ -88,6 +87,30 @@ static NSString *const kPHEntity = @"Tag";
     return result;
 }
 
+// Remove a specific tag from the store.
+//
+- (void)remove:(NSString *)tagID
+{
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:kPHEntity
+                                              inManagedObjectContext:_storeManager.managedObjectContext];
+    [fetchRequest setEntity:entity];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"id == %@", tagID];
+    [fetchRequest setPredicate:predicate];
+    NSError *error;
+    NSArray *fetchedObjects = [_storeManager.managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    if (error) {
+        MWLogError(@"%@", [error localizedDescription]);
+        return;
+    }
+    if ([fetchedObjects count] != 1) {
+        MWLogError(@"Attempted to delete Tag object not in TagsStore");
+        return;
+    }
+    [_storeManager.managedObjectContext deleteObject:[fetchedObjects lastObject]];
+    [_storeManager saveContext];
+}
+
 // Remove all tags from local storage.
 //
 - (void)clear
@@ -106,6 +129,7 @@ static NSString *const kPHEntity = @"Tag";
     for (NSManagedObject *object in fetchedObjects) {
         [_storeManager.managedObjectContext deleteObject:object];
     }
+    [_storeManager saveContext];
 }
 
 // Make a native tag object from a managed object.
@@ -118,7 +142,9 @@ static NSString *const kPHEntity = @"Tag";
     return @{@"id": (NSString *) [object valueForKey:@"id"],
              @"lat": (NSNumber *) [object valueForKey:@"lat"],
              @"lng": (NSNumber *) [object valueForKey:@"lng"],
-             @"text": (NSString *) [object valueForKey:@"text"]};
+             @"text": (NSString *) [object valueForKey:@"text"],
+             @"user_id": (NSString *) [object valueForKey:@"user_id"],
+             @"user_image_url": (NSString *) [object valueForKey:@"user_image_url"]};
 }
 
 @end

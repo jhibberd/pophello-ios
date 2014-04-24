@@ -48,7 +48,7 @@
 + (UILocalNotification *)makeLocalNotificationFromTag:(NSDictionary *)tag
 {
     UILocalNotification *notification = [[UILocalNotification alloc] init];
-    notification.alertBody = tag[@"text"];
+    notification.alertBody = [NSString stringWithFormat:@"%@: %@:", tag[@"user_id"], tag[@"text"]];
     notification.soundName = UILocalNotificationDefaultSoundName;
     return notification;
 }

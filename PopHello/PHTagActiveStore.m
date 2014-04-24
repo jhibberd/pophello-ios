@@ -30,11 +30,9 @@ static NSString *const kPHEntity = @"TagActive";
     [object setValue:tag[@"lat"] forKey:@"lat"];
     [object setValue:tag[@"lng"] forKey:@"lng"];
     [object setValue:tag[@"text"] forKey:@"text"];
-    
-    NSError *error;
-    if (![_storeManager.managedObjectContext save:&error]) {
-        MWLogError(@"%@", [error localizedDescription]);
-    }
+    [object setValue:tag[@"user_id"] forKey:@"user_id"];
+    [object setValue:tag[@"user_image_url"] forKey:@"user_image_url"];
+    [_storeManager saveContext];
 }
 
 // Fetch the active tag from local storage, or nil if there is no active tag.
@@ -61,7 +59,9 @@ static NSString *const kPHEntity = @"TagActive";
     return @{@"id": (NSString *) [object valueForKey:@"id"],
              @"lat": (NSNumber *) [object valueForKey:@"lat"],
              @"lng": (NSNumber *) [object valueForKey:@"lng"],
-             @"text": (NSString *) [object valueForKey:@"text"]};
+             @"text": (NSString *) [object valueForKey:@"text"],
+             @"user_id": (NSString *) [object valueForKey:@"user_id"],
+             @"user_image_url": (NSString *) [object valueForKey:@"user_image_url"]};
 }
 
 // Clear the active tag from local storage only if it matches the passed tag.
@@ -69,7 +69,7 @@ static NSString *const kPHEntity = @"TagActive";
 // This handles the situation when the device exits a tag geofence but, due to overlapping geofences, this may not
 // represent the active tag.
 //
-- (void)clearIfActive:(NSDictionary *)tag
+- (void)clearIfActive:(NSString *)tagID
 {
     NSDictionary *tagActive = [self fetch];
     // this shouldn't happen because to exit a tag the device must have entered it first
@@ -77,7 +77,7 @@ static NSString *const kPHEntity = @"TagActive";
         MWLogWarning(@"Attempt to clear the active data from local storage, but none exists");
         return;
     }
-    if ([tagActive[@"id"] isEqualToString:tag[@"id"]]) {
+    if ([tagActive[@"id"] isEqualToString:tagID]) {
         [self clear];
     }
 }
@@ -103,6 +103,7 @@ static NSString *const kPHEntity = @"TagActive";
     for (NSManagedObject *object in fetchedObjects) {
         [_storeManager.managedObjectContext deleteObject:object];
     }
+    [_storeManager saveContext];
 }
 
 @end
