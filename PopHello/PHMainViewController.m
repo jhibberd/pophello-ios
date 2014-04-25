@@ -9,15 +9,11 @@
 #import "PHTagView.h"
 #import "UIColor+PHColor.h"
 
-static CGFloat const kPHTopMargin = 30;
-static CGFloat const kPHViewHeight = 295;
-
 @interface PHMainViewController ()
 @end
 
 @implementation PHMainViewController {
     PHAnimationView *_animationView;
-    CGRect _animationViewFrame;
     NSString *_identifierVisible;
     NSString *_identifierActive;
     UIView *_viewActive;
@@ -36,7 +32,6 @@ static CGFloat const kPHViewHeight = 295;
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor ph_appBackgroundColor];
     
-    _animationViewFrame = CGRectMake(0, 0, self.view.frame.size.width, kPHViewHeight);
     _animationView = [[PHAnimationView alloc] init];
     _animationView.delegate = self;
     [self.view addSubview:_animationView];
@@ -44,16 +39,35 @@ static CGFloat const kPHViewHeight = 295;
     _animationView.translatesAutoresizingMaskIntoConstraints = NO;
     UIView *view = self.view;
     NSDictionary *bindings = NSDictionaryOfVariableBindings(view, _animationView);
-    NSArray *fmts = @[[NSString stringWithFormat:@"V:|-%f-[_animationView(%f)]-(>=0)-|", kPHTopMargin, kPHViewHeight],
-                      [NSString stringWithFormat:@"|[_animationView]-(-%f)-|", self.view.frame.size.width],
-                      [NSString stringWithFormat:@"[view(%f)]", self.view.frame.size.width],     // fill width
-                      [NSString stringWithFormat:@"V:[view(%f)]", self.view.frame.size.height]]; // fill height
+    NSArray *fmts = @[@"V:|[_animationView]|", @"|[_animationView]|"];
     for (NSString *fmt in fmts) {
         [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:fmt
                                                                      options:0
                                                                      metrics:nil
                                                                        views:bindings]];
-    }    
+    }
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardDidShowOrWillHide:)
+                                                 name:UIKeyboardDidShowNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardDidShowOrWillHide:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
+}
+
+// Handle the keyboard appearing or disappearing.
+//
+// Resize the content so that it isn't obscured by the keyboard if it appears.
+//
+- (void)keyboardDidShowOrWillHide:(NSNotification *)notification
+{
+    NSDictionary *userInfo = notification.userInfo;
+    CGRect keyboardFrameEnd = [userInfo[UIKeyboardFrameEndUserInfoKey] CGRectValue];
+    keyboardFrameEnd = [self.view convertRect:keyboardFrameEnd fromView:nil];
+    self.view.frame = CGRectMake(0, 0, self.view.frame.size.width, keyboardFrameEnd.origin.y);
+    [self.view layoutIfNeeded];
 }
 
 - (void)presentTagView:(NSDictionary *)tag
@@ -61,10 +75,7 @@ static CGFloat const kPHViewHeight = 295;
               delegate:(id<PHTagViewDelegate>)delegate
 {
     _identifierActive = [NSString stringWithFormat:@"tag-%@", tag[@"id"]];
-    _viewActive = [[PHTagView alloc] initWithFrame:_animationViewFrame
-                                               tag:tag
-                                            server:server
-                                          delegate:delegate];
+    _viewActive = [[PHTagView alloc] initWithTag:tag server:server delegate:delegate];
     [self animateUIToMatchState];
 }
 
@@ -73,38 +84,35 @@ static CGFloat const kPHViewHeight = 295;
                 delegate:(id<PHTagCreateDelegate>)delegate
 {
     _identifierActive = @"tag-creation";
-    _viewActive = [[PHTagCreate alloc] initWithFrame:_animationViewFrame
-                                         zoneManager:zoneManager
-                                              server:server
-                                            delegate:delegate];
+    _viewActive = [[PHTagCreate alloc] initWithZoneManager:zoneManager server:server delegate:delegate];
     [self animateUIToMatchState];
 }
 
 - (void)presentTagCreationSuccess
 {
     _identifierActive = @"tag-creation-success";
-    _viewActive = [[PHTagCreateSuccess alloc] initWithFrame:_animationViewFrame];
+    _viewActive = [[PHTagCreateSuccess alloc] init];
     [self animateUIToMatchState];
 }
 
 - (void)presentServerError
 {
     _identifierActive = @"server-error";
-    _viewActive = [[PHServerError alloc] initWithFrame:_animationViewFrame];
+    _viewActive = [[PHServerError alloc] init];
     [self animateUIToMatchState];
 }
 
 - (void)presentPending
 {
     _identifierActive = @"pending";
-    _viewActive = [[PHPending alloc] initWithFrame:_animationViewFrame];
+    _viewActive = [[PHPending alloc] init];
     [self animateUIToMatchState];
 }
 
 - (void)presentServiceUnavailable:(NSString *)reason
 {
     _identifierActive = @"service-unavailable";
-    _viewActive = [[PHServiceUnavailable alloc] initWithFrame:_animationViewFrame reason:reason];
+    _viewActive = [[PHServiceUnavailable alloc] initWithReason:reason];
     [self animateUIToMatchState];
 }
 

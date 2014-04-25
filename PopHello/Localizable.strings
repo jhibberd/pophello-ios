@@ -6,7 +6,7 @@
 "SERVICE_UNAVAILABLE_MULTITASKING_SUPPORTED" = "Multitasking is not supported.";
 "OK" = "OK";
 "TAG_CREATE_SUBMIT" = "Post";
-"TAG_CREATE_SUCCESS" = "Tag posted";
+"TAG_CREATE_SUCCESS" = "Yay, your tag has been posted. I wonder who will find it.";
 "SERVER_ERROR" = "Uh oh, something went horribly wrong";
 "LOCATION_UNKNOWN" = "Can't find your location, try again in a few seconds";
 "TAG_ACKNOWLEDGE" = "Ok";

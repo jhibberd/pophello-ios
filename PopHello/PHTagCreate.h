@@ -5,8 +5,7 @@
 #import "PHZoneManager.h"
 
 @interface PHTagCreate : UIView
-- (id)initWithFrame:(CGRect)frame
-        zoneManager:(PHZoneManager *)zoneManager
-             server:(PHServer *)server
-           delegate:(id<PHTagCreateDelegate>)delegate;
+- (id)initWithZoneManager:(PHZoneManager *)zoneManager
+                   server:(PHServer *)server
+                 delegate:(id<PHTagCreateDelegate>)delegate;
 @end

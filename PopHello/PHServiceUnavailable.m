@@ -5,9 +5,9 @@
 
 @implementation PHServiceUnavailable
 
-- (id)initWithFrame:(CGRect)frame reason:(NSString *)reason
+- (id)initWithReason:(NSString *)reason
 {
-    self = [super initWithFrame:frame];
+    self = [super init];
     if (self) {
         
         self.backgroundColor = [UIColor ph_failureBackgroundColor];
@@ -25,9 +25,7 @@
         textLabel.translatesAutoresizingMaskIntoConstraints = NO;
         NSDictionary *bindings = NSDictionaryOfVariableBindings(self, textLabel);
         NSArray *fmts = @[@"V:|-15-[textLabel]-(>=15)-|",
-                          @"|-15-[textLabel]-15-|",
-                          [NSString stringWithFormat:@"[self(%f)]", self.frame.size.width],     // fill width
-                          [NSString stringWithFormat:@"V:[self(%f)]", self.frame.size.height]]; // fill height
+                          @"|-15-[textLabel]-15-|"];
         for (NSString *fmt in fmts) {
             [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:fmt
                                                                          options:0

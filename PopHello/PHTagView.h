@@ -4,7 +4,5 @@
 #import "PHTagViewDelegate.h"
 
 @interface PHTagView : UIView
-- (id)initWithFrame:(CGRect)frame tag:(NSDictionary *)tag
-             server:(PHServer *)server
-           delegate:(id<PHTagViewDelegate>)delegate;
+- (id)initWithTag:(NSDictionary *)tag server:(PHServer *)server delegate:(id<PHTagViewDelegate>)delegate;
 @end

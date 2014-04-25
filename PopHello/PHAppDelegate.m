@@ -207,8 +207,7 @@ static NSString *const kPHPropertyUserID = @"UserID";
         ![_serviceAvailabilityMonitor isAvailable]) {
         return;
     }
-    [_mainView presentTagCreate:_zoneManager server:_server delegate:self];
-    [_zoneManager startMonitoringPreciseLocationChanges];
+    [self initUI];
 }
 
 // Handle an error occurring when the user tried to acknowledge a tag.

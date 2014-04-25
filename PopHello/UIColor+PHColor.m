@@ -48,12 +48,12 @@
     return [UIColor whiteColor];
 }
 
-+ (UIColor *)ph_usernameTextColor
++ (UIColor *)ph_userImagePlaceholderColor
 {
-    return [UIColor colorWithWhite:.3 alpha:1];
+    return [UIColor colorWithWhite:.95 alpha:1];
 }
 
-+ (UIColor *)ph_userImagePlaceholderColor
++ (UIColor *)ph_buttonBorderContentColor
 {
     return [UIColor colorWithWhite:.95 alpha:1];
 }

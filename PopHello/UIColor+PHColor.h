@@ -11,6 +11,6 @@
 + (UIColor *)ph_buttonTextColor;
 + (UIColor *)ph_successTextColor;
 + (UIColor *)ph_failureTextColor;
-+ (UIColor *)ph_usernameTextColor;
 + (UIColor *)ph_userImagePlaceholderColor;
++ (UIColor *)ph_buttonBorderContentColor;
 @end

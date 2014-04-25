@@ -1,25 +1,27 @@
 
+#import "PHButton.h"
 #import "PHTagView.h"
 #import "PHUserView.h"
 #import "UIColor+PHColor.h"
 #import "UIFont+PHFont.h"
 
+
 @implementation PHTagView {
     NSString *_tagID;
-    UIButton *_button;
+    PHButton *_button;
     PHServer *_server;
     id<PHTagViewDelegate> _delegate;
 }
 
-- (id)initWithFrame:(CGRect)frame
-                tag:(NSDictionary *)tag
-             server:(PHServer *)server
-           delegate:(id<PHTagViewDelegate>)delegate
+- (id)initWithTag:(NSDictionary *)tag server:(PHServer *)server delegate:(id<PHTagViewDelegate>)delegate
 {
-    self = [super initWithFrame:frame];
+    self = [super init];
     if (self) {
     
         self.backgroundColor = [UIColor ph_contentBackgroundColor];
+        
+        PHUserView *userView = [[PHUserView alloc] initWithName:tag[@"user_id"] imageURL:tag[@"user_image_url"]];
+        [self addSubview:userView];
         
         // init text label
         UILabel *textLabel = [[UILabel alloc] init];
@@ -30,11 +32,7 @@
         textLabel.text = tag[@"text"];
         [self addSubview:textLabel];
         
-        PHUserView *userView = [[PHUserView alloc] initWithName:tag[@"user_id"] imageURL:tag[@"user_image_url"]];
-        [self addSubview:userView];
-        
-        _button = [[UIButton alloc] init];
-        _button.backgroundColor = [UIColor ph_contentBackgroundColor];
+        _button = [[PHButton alloc] init];
         _button.titleLabel.font = [UIFont ph_primaryFont];
         [_button setTitleColor:[UIColor ph_buttonTextColor] forState:UIControlStateNormal];
         [_button setTitle:NSLocalizedString(@"TAG_ACKNOWLEDGE", nil) forState:UIControlStateNormal];
@@ -48,12 +46,10 @@
         _button.translatesAutoresizingMaskIntoConstraints = NO;
         userView.translatesAutoresizingMaskIntoConstraints = NO;
         NSDictionary *bindings = NSDictionaryOfVariableBindings(self, textLabel, _button, userView);
-        NSArray *fmts = @[@"V:|-15-[textLabel]-(>=15)-[userView]-[_button(55)]|",
+        NSArray *fmts = @[@"V:|-30-[userView]-50-[textLabel]-(>=15)-[_button(55)]|",
                           @"|-15-[textLabel]-15-|",
-                          @"|-20-[userView]-20-|",
-                          @"|[_button]|",
-                          [NSString stringWithFormat:@"[self(%f)]", self.frame.size.width],     // fill width
-                          [NSString stringWithFormat:@"V:[self(%f)]", self.frame.size.height]]; // fill height
+                          @"|-15-[userView]-15-|",
+                          @"|[_button]|"];
         for (NSString *fmt in fmts) {
             [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:fmt
                                                                          options:0
@@ -72,9 +68,8 @@
 //
 - (void)buttonSubmitWasClicked
 {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [_delegate tagAcknowledgementWasSubmitted];
-    });
+    [_button setEnabled:NO];
+    [_delegate tagAcknowledgementWasSubmitted];
     
     [_server acknowledgeTag:_tagID
              successHandler:^{

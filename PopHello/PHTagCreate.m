@@ -1,5 +1,6 @@
 
 #import <CoreLocation/CoreLocation.h>
+#import "PHButton.h"
 #import "PHTagCreate.h"
 #import "PHUserView.h"
 #import "UIColor+PHColor.h"
@@ -8,36 +9,34 @@
 
 @implementation PHTagCreate {
     UITextView *_textView;
-    UIButton *_button;
+    PHButton *_button;
     PHZoneManager *_zoneManager;
     PHServer *_server;
     id<PHTagCreateDelegate> _delegate;
 }
 
-- (id)initWithFrame:(CGRect)frame
-        zoneManager:(PHZoneManager *)zoneManager
+- (id)initWithZoneManager:(PHZoneManager *)zoneManager
              server:(PHServer *)server
            delegate:(id<PHTagCreateDelegate>)delegate
 {
-    self = [super initWithFrame:frame];
+    self = [super init];
     if (self) {
         
         self.backgroundColor = [UIColor ph_contentBackgroundColor];
+        
+        PHUserView *userView = [[PHUserView alloc] initWithName:[self getUserID] imageURL:[self getUserImageURL]];
+        [self addSubview:userView];
         
         _textView = [[UITextView alloc] init];
         _textView.font = [UIFont ph_primaryFont];
         _textView.backgroundColor = [UIColor ph_contentBackgroundColor];
         _textView.textColor = [UIColor ph_mainTextColor];
-        _textView.textContainer.lineFragmentPadding = 20; // to match UILabel padding
+        _textView.textContainer.lineFragmentPadding = 15; // to match UILabel padding
         _textView.scrollEnabled = NO; // otherwise layout constraints don't work
         [_textView becomeFirstResponder];
         [self addSubview:_textView];
-
-        PHUserView *userView = [[PHUserView alloc] initWithName:[self getUserID] imageURL:[self getUserImageURL]];
-        [self addSubview:userView];
         
-        _button = [[UIButton alloc] init];
-        _button.backgroundColor = [UIColor ph_contentBackgroundColor];
+        _button = [[PHButton alloc] init];
         _button.titleLabel.font = [UIFont ph_primaryFont];
         [_button setTitleColor:[UIColor ph_buttonTextColor] forState:UIControlStateNormal];
         [_button setTitle:NSLocalizedString(@"TAG_CREATE_SUBMIT", nil) forState:UIControlStateNormal];
@@ -50,12 +49,10 @@
         _button.translatesAutoresizingMaskIntoConstraints = NO;
         userView.translatesAutoresizingMaskIntoConstraints = NO;
         NSDictionary *bindings = NSDictionaryOfVariableBindings(self, _textView, _button, userView);
-        NSArray *fmts = @[@"V:|-10-[_textView]-(>=0)-[userView]-[_button(55)]|",
+        NSArray *fmts = @[@"V:|-30-[userView]-50-[_textView]-(>=15)-[_button(55)]|",
                           @"|[_textView]|",
-                          @"|-20-[userView]-20-|",
-                          @"|[_button]|",
-                          [NSString stringWithFormat:@"[self(%f)]", self.frame.size.width],     // fill width
-                          [NSString stringWithFormat:@"V:[self(%f)]", self.frame.size.height]]; // fill height
+                          @"|-15-[userView]-15-|",
+                          @"|[_button]|"];
         for (NSString *fmt in fmts) {
             [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:fmt
                                                                          options:0
@@ -79,7 +76,7 @@
 // the server.
 //
 - (void)buttonSubmitWasClicked
-{
+{    
     NSString *text = _textView.text;
     if (text.length == 0) {
         return;
@@ -98,9 +95,7 @@
     
     [_textView setEditable:NO];
     [_button setEnabled:NO];
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [_delegate tagCreationWasSubmitted];
-    });
+    [_delegate tagCreationWasSubmitted];
     
     [_server postTagAt:location
                   text:text

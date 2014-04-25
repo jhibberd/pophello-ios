@@ -25,6 +25,16 @@ static NSString *const kPHAnimationKey = @"view-animation";
     _viewVisible = view;
     _identifierVisible = identifier;
     
+    view.translatesAutoresizingMaskIntoConstraints = NO;
+    NSDictionary *bindings = NSDictionaryOfVariableBindings(self, view);
+    NSArray *fmts = @[@"V:|[view]|", @"|[view]|"];
+    for (NSString *fmt in fmts) {
+        [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:fmt
+                                                                     options:0
+                                                                     metrics:nil
+                                                                       views:bindings]];
+    }
+    
     CATransition *animation = [CATransition animation];
 	[animation setDuration:kPHAnimationDuration];
 	[animation setType:kCATransitionPush];

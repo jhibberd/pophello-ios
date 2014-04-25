@@ -36,6 +36,7 @@
 		0DBE76C218FCDCD100EC32D4 /* PHUserView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DBE76C118FCDCD100EC32D4 /* PHUserView.m */; };
 		0DBE76C818FD08E400EC32D4 /* UIImage+PHImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DBE76C718FD08E400EC32D4 /* UIImage+PHImage.m */; };
 		0DBE7CD21897442300074E96 /* PHTagView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DBE7CD11897442300074E96 /* PHTagView.m */; };
+		0DC3D612190A3E66009B299B /* PHButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DC3D611190A3E66009B299B /* PHButton.m */; };
 		0DE54207188E3E85004F72E9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DE54206188E3E85004F72E9 /* Foundation.framework */; };
 		0DE54209188E3E85004F72E9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DE54208188E3E85004F72E9 /* CoreGraphics.framework */; };
 		0DE5420B188E3E85004F72E9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DE5420A188E3E85004F72E9 /* UIKit.framework */; };
@@ -122,6 +123,8 @@
 		0DBE7CD01897442300074E96 /* PHTagView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHTagView.h; sourceTree = "<group>"; };
 		0DBE7CD11897442300074E96 /* PHTagView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHTagView.m; sourceTree = "<group>"; };
 		0DC3D13318E8FAD500C2FFF9 /* PHAnimationViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PHAnimationViewDelegate.h; sourceTree = "<group>"; };
+		0DC3D610190A3E66009B299B /* PHButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHButton.h; sourceTree = "<group>"; };
+		0DC3D611190A3E66009B299B /* PHButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHButton.m; sourceTree = "<group>"; };
 		0DE54203188E3E85004F72E9 /* PopHello.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PopHello.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0DE54206188E3E85004F72E9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		0DE54208188E3E85004F72E9 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -244,6 +247,8 @@
 			children = (
 				0DBE76C018FCDCD100EC32D4 /* PHUserView.h */,
 				0DBE76C118FCDCD100EC32D4 /* PHUserView.m */,
+				0DC3D610190A3E66009B299B /* PHButton.h */,
+				0DC3D611190A3E66009B299B /* PHButton.m */,
 			);
 			name = Component;
 			sourceTree = "<group>";
@@ -475,6 +480,7 @@
 				0DADA24A189E133000AFA25C /* PHServer.m in Sources */,
 				0D094FD018D7FC4D006EFD4C /* PHTagNotification.m in Sources */,
 				0D7824DD18DBE74000F28481 /* PHTagActiveStore.m in Sources */,
+				0DC3D612190A3E66009B299B /* PHButton.m in Sources */,
 				0DACA7CD18E267D8000297EB /* PHTagCreateSuccess.m in Sources */,
 				0DE54217188E3E85004F72E9 /* PHAppDelegate.m in Sources */,
 				0DADA23D189C8CFE00AFA25C /* MWLogging.m in Sources */,
