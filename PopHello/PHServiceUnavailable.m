@@ -24,7 +24,7 @@
         // define layout
         textLabel.translatesAutoresizingMaskIntoConstraints = NO;
         NSDictionary *bindings = NSDictionaryOfVariableBindings(self, textLabel);
-        NSArray *fmts = @[@"V:|-15-[textLabel]-(>=15)-|",
+        NSArray *fmts = @[@"V:|-30-[textLabel]-(>=15)-|",
                           @"|-15-[textLabel]-15-|"];
         for (NSString *fmt in fmts) {
             [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:fmt
