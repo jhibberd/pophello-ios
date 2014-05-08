@@ -628,6 +628,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: James Hibberd (J8DTP2RX73)";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -637,6 +639,7 @@
 				GCC_PREFIX_HEADER = "PopHello/PopHello-Prefix.pch";
 				INFOPLIST_FILE = "PopHello/PopHello-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "4E58C837-382E-4181-8B52-9692F8BA8117";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -646,6 +649,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -654,6 +658,7 @@
 				GCC_PREFIX_HEADER = "PopHello/PopHello-Prefix.pch";
 				INFOPLIST_FILE = "PopHello/PopHello-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "4E58C837-382E-4181-8B52-9692F8BA8117";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

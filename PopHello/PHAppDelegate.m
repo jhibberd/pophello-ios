@@ -63,7 +63,8 @@ static NSString *const kPHPropertyUserID = @"UserID";
                                                         server:_server];
     _locationService.delegate = _zoneManager;
     _zoneManager.delegate = self;
-
+    
+    [application registerForRemoteNotificationTypes:UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound];
     return YES;
 }
 
@@ -277,6 +278,38 @@ static NSString *const kPHPropertyUserID = @"UserID";
     if ([UIApplication sharedApplication].applicationState == UIApplicationStateActive) {
         [_mainView presentServiceUnavailable:[_serviceAvailabilityMonitor getMostRelevantHumanErrorMessage]];
     }
+}
+
+
+# pragma mark - Remote Notifications
+
+// Once the device has been registered with Apple Push Notification Services post the device ID to the server.
+//
+// The device token is originally an NSData object which needs to be converted and formatted as an NSString for
+// compatibility with the server.
+//
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+    NSString *deviceTokenString = [[deviceToken description] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
+    deviceTokenString = [deviceTokenString stringByReplacingOccurrencesOfString:@" " withString:@""];
+    
+    [_server registerDeviceForPushNotifications:deviceTokenString successHandler:^{
+        MWLogInfo(@"successfully registered device with server");
+    } errorHandler:^(NSDictionary *response) {
+        MWLogWarning(@"failed to register device with server");
+    }];
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    MWLogInfo(@"received tag acknowledgement notification");
+    // TODO: if the app is in the background the OS will present a local notification, otherwise the notification will
+    //       arrive here, so the app should present it to the user in some way.
+}
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
+{
+    MWLogError(@"failed to register for remote notifications: %@", [error localizedDescription]);
 }
 
 @end

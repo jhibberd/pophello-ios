@@ -14,4 +14,7 @@
 - (void)acknowledgeTag:(NSString *)tagId
         successHandler:(void (^)())successHandler
           errorHandler:(void (^)(NSDictionary *response))errorHandler;
+- (void)registerDeviceForPushNotifications:(NSString *)deviceID
+                            successHandler:(void (^)())successHandler
+                              errorHandler:(void (^)(NSDictionary *response))errorHandler;
 @end

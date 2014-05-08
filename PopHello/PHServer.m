@@ -72,7 +72,6 @@ static NSString *const kPHPropertyServerHost = @"ServerHost";
         successHandler();
         
     } errorHandler:errorHandler];
-
 }
 
 // Acknowledge that the user has consumed a tag.
@@ -88,6 +87,41 @@ static NSString *const kPHPropertyServerHost = @"ServerHost";
     NSURL *url = [self buildURLWithPath:path query:query];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setHTTPMethod:@"DELETE"];
+    
+    [self dataTaskWithRequest:request successHandler:^(NSDictionary *response) {
+        successHandler();
+        
+    } errorHandler:errorHandler];
+}
+
+// Once a device has registered with Apple Push Notification Services post its device ID to the server so that it can
+// receive push notifications.
+//
+// Currently push notifications are only used to notify a user that one of their tags has been discovered by another
+// user.
+//
+- (void)registerDeviceForPushNotifications:(NSString *)deviceID
+                            successHandler:(void (^)())successHandler
+                              errorHandler:(void (^)(NSDictionary *))errorHandler
+{
+    NSDictionary *body = @{@"user_id": _userID,
+                           @"device_id": deviceID,
+                           @"device_type": @"apple"};
+    
+    // JSON serialize the request body dictionary
+    NSError *error = nil;
+    NSData *bodyData = [NSJSONSerialization dataWithJSONObject:body options:kNilOptions error:&error];
+    if (!bodyData || error) {
+        NSLog(@"failed to serialize data object");
+        return;
+    }
+    
+    // build the HTTP request
+    NSURL *url = [self buildURLWithPath:@"/devices" query:nil];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setHTTPMethod:@"POST"];
+    [request setHTTPBody:bodyData];
+    [request setValue:@"application/json; charset=UTF-8" forHTTPHeaderField:@"Content-type"];
     
     [self dataTaskWithRequest:request successHandler:^(NSDictionary *response) {
         successHandler();
