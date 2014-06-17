@@ -1,13 +1,8 @@
 
 #import "PHMainViewController.h"
 #import "PHAnimationView.h"
-#import "PHPending.h"
-#import "PHServiceUnavailable.h"
-#import "PHTagCreate.h"
-#import "PHServerError.h"
-#import "PHTagCreateSuccess.h"
-#import "PHTagView.h"
 #import "UIColor+PHColor.h"
+#import "PopHello-Swift.h"
 
 @interface PHMainViewController ()
 @end
@@ -70,49 +65,49 @@
     [self.view layoutIfNeeded];
 }
 
-- (void)presentTagView:(NSDictionary *)tag
-                server:(PHServer *)server
-              delegate:(id<PHTagViewDelegate>)delegate
+- (void)presentTagView:(Tag *)card
+                server:(Server *)server
+              delegate:(id<TagViewDelegate>)delegate
 {
-    _identifierActive = [NSString stringWithFormat:@"tag-%@", tag[@"id"]];
-    _viewActive = [[PHTagView alloc] initWithTag:tag server:server delegate:delegate];
+    _identifierActive = [NSString stringWithFormat:@"tag-%@", card.id];
+    _viewActive = [[TagView alloc] initWithCard:card server:server delegate:delegate];
     [self animateUIToMatchState];
 }
 
-- (void)presentTagCreate:(PHZoneManager *)zoneManager
-                  server:(PHServer *)server
-                delegate:(id<PHTagCreateDelegate>)delegate
+- (void)presentTagCreate:(ZoneManager *)zoneManager
+                  server:(Server *)server
+                delegate:(id<TagCreateViewDelegate>)delegate
 {
     _identifierActive = @"tag-creation";
-    _viewActive = [[PHTagCreate alloc] initWithZoneManager:zoneManager server:server delegate:delegate];
+    _viewActive = [[TagCreateView alloc] initWithZoneManager:zoneManager server:server delegate:delegate];
     [self animateUIToMatchState];
 }
 
 - (void)presentTagCreationSuccess
 {
     _identifierActive = @"tag-creation-success";
-    _viewActive = [[PHTagCreateSuccess alloc] init];
+    _viewActive = [[TagCreateSuccessView alloc] init];
     [self animateUIToMatchState];
 }
 
 - (void)presentServerError
 {
     _identifierActive = @"server-error";
-    _viewActive = [[PHServerError alloc] init];
+    _viewActive = [[ServerErrorView alloc] init];
     [self animateUIToMatchState];
 }
 
 - (void)presentPending
 {
     _identifierActive = @"pending";
-    _viewActive = [[PHPending alloc] init];
+    _viewActive = [[PendingView alloc] init];
     [self animateUIToMatchState];
 }
 
 - (void)presentServiceUnavailable:(NSString *)reason
 {
     _identifierActive = @"service-unavailable";
-    _viewActive = [[PHServiceUnavailable alloc] initWithReason:reason];
+    _viewActive = [[ServiceUnavailableView alloc] initWithReason:reason];
     [self animateUIToMatchState];
 }
 

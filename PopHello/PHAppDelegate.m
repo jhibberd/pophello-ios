@@ -5,18 +5,18 @@
 #import "PHLocationService.h"
 #import "PHLogRecorder.h"
 #import "PHMainViewController.h"
-#import "PHServer.h"
 #import "PHServiceAvailabilityMonitor.h"
 #import "PHStoreManager.h"
 #import "PHTagNotification.h"
 #import "PHZoneManager.h"
+#import "PopHello-Swift.h"
 
 static NSString *const kPHPropertyUserID = @"UserID";
 
 @implementation PHAppDelegate {
     PHLocationService *_locationService;
     PHZoneManager *_zoneManager;
-    PHServer *_server;
+    Server *_server;
     PHStoreManager *_storeManager;
     PHMainViewController *_mainView;
     PHServiceAvailabilityMonitor *_serviceAvailabilityMonitor;
@@ -39,9 +39,9 @@ static NSString *const kPHPropertyUserID = @"UserID";
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // send usage stats and error reports to a third party server to analysis
-    [BugSenseController sharedControllerWithBugSenseAPIKey:@"5b8a5499" userDictionary:nil sendImmediately:YES];
+    //[BugSenseController sharedControllerWithBugSenseAPIKey:@"5b8a5499" userDictionary:nil sendImmediately:YES];
     
-    [PHLogRecorder record];
+    //[PHLogRecorder record];
     MWLogInfo(@"Application launched");
     
     // manually set the root view controller to the main view controller so that the "unavailable" view controller
@@ -56,7 +56,7 @@ static NSString *const kPHPropertyUserID = @"UserID";
     
     _serviceAvailabilityMonitor = [[PHServiceAvailabilityMonitor alloc] initWithDelegate:self];
     _storeManager = [[PHStoreManager alloc] initWithServiceAvailabilityMonitor:_serviceAvailabilityMonitor];
-    _server = [[PHServer alloc] initWithUserID:userID];
+    _server = [[Server alloc] initWithUserID:userID];
     _locationService = [[PHLocationService alloc] initWithServiceAvailabilityMonitor:_serviceAvailabilityMonitor];
     _zoneManager = [[PHZoneManager alloc] initWithStoreManager:_storeManager
                                                locationService:_locationService
@@ -103,12 +103,14 @@ static NSString *const kPHPropertyUserID = @"UserID";
     NSDictionary *tagActive = [_zoneManager getActiveTag];
     if (tagActive == nil) {
         MWLogInfo(@"showing create view");
-        [_mainView presentTagCreate:_zoneManager server:_server delegate:self];
+        //[_mainView presentTagCreate:_zoneManager server:_server delegate:self];
+        [_mainView presentTagCreate:[[ZoneManager alloc] init] server:_server delegate:self];
         [_zoneManager startMonitoringPreciseLocationChanges];
     } else {
         MWLogInfo(@"showing tag view");
         [_zoneManager stopMonitoringLocationChanges];
-        [_mainView presentTagView:tagActive server:_server delegate:self];
+        //[_mainView presentTagView:tagActive server:_server delegate:self];
+        [_mainView presentTagView:[Tag initWithJSON: nil] server:_server delegate:self];
     }
 }
 
@@ -293,9 +295,9 @@ static NSString *const kPHPropertyUserID = @"UserID";
     NSString *deviceTokenString = [[deviceToken description] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]];
     deviceTokenString = [deviceTokenString stringByReplacingOccurrencesOfString:@" " withString:@""];
     
-    [_server registerDeviceForPushNotifications:deviceTokenString successHandler:^{
+    [_server registerDeviceForPushNotification:deviceTokenString success:^{
         MWLogInfo(@"successfully registered device with server");
-    } errorHandler:^(NSDictionary *response) {
+    } error:^(NSDictionary *response) {
         MWLogWarning(@"failed to register device with server");
     }];
 }

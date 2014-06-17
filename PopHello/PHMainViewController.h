@@ -1,18 +1,14 @@
-
 #import <UIKit/UIKit.h>
 #import "PHAnimationViewDelegate.h"
-#import "PHServer.h"
-#import "PHTagCreateDelegate.h"
-#import "PHTagViewDelegate.h"
-#import "PHZoneManager.h"
+#import "PopHello-Swift.h"
 
 @interface PHMainViewController : UIViewController <UIGestureRecognizerDelegate, PHAnimationViewDelegate>
-- (void)presentTagView:(NSDictionary *)tag
-                server:(PHServer *)server
-              delegate:(id<PHTagViewDelegate>)delegate;
-- (void)presentTagCreate:(PHZoneManager *)zoneManager
-                  server:(PHServer *)server
-                delegate:(id<PHTagCreateDelegate>)delegate;
+- (void)presentTagView:(Tag *)tag
+                server:(Server *)server
+              delegate:(id<TagViewDelegate>)delegate;
+- (void)presentTagCreate:(ZoneManager *)zoneManager
+                  server:(Server *)server
+                delegate:(id<TagCreateViewDelegate>)delegate;
 - (void)presentTagCreationSuccess;
 - (void)presentServerError;
 - (void)presentPending;

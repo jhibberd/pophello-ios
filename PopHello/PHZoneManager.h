@@ -3,15 +3,15 @@
 #import <Foundation/Foundation.h>
 #import "PHLocationService.h"
 #import "PHLocationServiceDelegate.h"
-#import "PHServer.h"
 #import "PHStoreManager.h"
 #import "PHZoneManagerDelegate.h"
+#import "PopHello-Swift.h"
 
 @interface PHZoneManager : NSObject <PHLocationServiceDelegate>
 @property (nonatomic, weak) id<PHZoneManagerDelegate> delegate;
 - (id)initWithStoreManager:(PHStoreManager *)storeManager
            locationService:(PHLocationService *)locationService
-                    server:(PHServer *)server;
+                    server:(Server *)server;
 - (void)startMonitoringSignificantLocationChanges;
 - (void)startMonitoringPreciseLocationChanges;
 - (void)stopMonitoringLocationChanges;

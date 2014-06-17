@@ -16,7 +16,7 @@ typedef NS_ENUM(NSUInteger, PHLocationUpdateMode) {
 //
 @implementation PHZoneManager {
     PHLocationService *_locationService;
-    PHServer *_server;
+    Server *_server;
     PHTagsStore *_tagsStore;
     PHTagActiveStore *_tagActiveStore;
     CLLocationCoordinate2D _lastPreciseLocation;
@@ -27,7 +27,7 @@ typedef NS_ENUM(NSUInteger, PHLocationUpdateMode) {
 
 - (id)initWithStoreManager:(PHStoreManager *)storeManager
            locationService:(PHLocationService *)locationService
-                    server:(PHServer *)server
+                    server:(Server *)server
 {
     self = [super init];
     if (self) {
@@ -161,8 +161,8 @@ typedef NS_ENUM(NSUInteger, PHLocationUpdateMode) {
         // whether Location Services are enabled while the application is running in the background.
         UIBackgroundTaskIdentifier taskId = _backgroundTaskQueryServer;
         
-        // query server for tags (which takes a non-trivial amount of time)
-        [_server queryForZoneTags:center successHandler:^(NSArray *tagsNew) {
+        // query server for tags (which takes a non-trivial amount of time)        
+        [_server queryForZoneTags:center success:^(NSArray *tagsNew) {
             
             // check the task is still valid (see comment above)
             if (taskId != _backgroundTaskQueryServer) {
@@ -178,7 +178,7 @@ typedef NS_ENUM(NSUInteger, PHLocationUpdateMode) {
             [application endBackgroundTask:_backgroundTaskQueryServer];
             _backgroundTaskQueryServer = UIBackgroundTaskInvalid;
 
-        } errorHandler:^(NSDictionary *response) {
+        } error:^(NSDictionary *response) {
             MWLogError(@"Server error while building zone");
             [application endBackgroundTask:_backgroundTaskQueryServer];
             _backgroundTaskQueryServer = UIBackgroundTaskInvalid;

@@ -11,32 +11,34 @@
 		0D0E039618D154BC009B604E /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D0E039518D154BC009B604E /* CoreData.framework */; };
 		0D0E039918D154CE009B604E /* PopHello.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0D0E039718D154CE009B604E /* PopHello.xcdatamodeld */; };
 		0D1A90C51892656B009636D0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0D1A90C41892656B009636D0 /* Localizable.strings */; };
+		0D1DD19C195024BE004CBEDA /* TagViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1DD19B195024BE004CBEDA /* TagViewDelegate.swift */; };
+		0D1DD19E19502584004CBEDA /* ActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1DD19D19502584004CBEDA /* ActionButton.swift */; };
+		0D1DD1A01950292F004CBEDA /* TagCreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1DD19F1950292F004CBEDA /* TagCreateView.swift */; };
+		0D1DD1A219503843004CBEDA /* TagCreateViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1DD1A119503843004CBEDA /* TagCreateViewDelegate.swift */; };
+		0D1DD1A4195042AC004CBEDA /* ZoneManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1DD1A3195042AC004CBEDA /* ZoneManager.swift */; };
 		0D2C848B18F91A0A005B85CE /* NSArray+PHArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D2C848A18F91A0A005B85CE /* NSArray+PHArray.m */; };
 		0D2C848E18FA48D4005B85CE /* PHServiceAvailabilityMonitor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D2C848D18FA48D4005B85CE /* PHServiceAvailabilityMonitor.m */; };
-		0D2C849218FA70D5005B85CE /* PHServiceUnavailable.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D2C849118FA70D5005B85CE /* PHServiceUnavailable.m */; };
-		0D6488D418CD45B6002FFD3E /* PHTagCreate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D6488D318CD45B6002FFD3E /* PHTagCreate.m */; };
+		0D487024195008EE00E8D6AA /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D487023195008EE00E8D6AA /* TagView.swift */; };
+		0D48702719501C7B00E8D6AA /* UserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D48702619501C7B00E8D6AA /* UserView.swift */; };
 		0D70C4241895FD3B0043ED68 /* UIColor+PHColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D70C4231895FD3B0043ED68 /* UIColor+PHColor.m */; };
 		0D7824DA18DAC27100F28481 /* PHLogRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D7824D918DAC27100F28481 /* PHLogRecorder.m */; };
 		0D7824DD18DBE74000F28481 /* PHTagActiveStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D7824DC18DBE74000F28481 /* PHTagActiveStore.m */; };
 		0D7824E518DDA51700F28481 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D7824E418DDA51700F28481 /* SystemConfiguration.framework */; };
 		0D7824E718DDA52800F28481 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0D7824E618DDA52800F28481 /* libz.dylib */; };
+		0D9A91F21947F4950094ECAC /* ServiceUnavailableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9A91F11947F4950094ECAC /* ServiceUnavailableView.swift */; };
 		0DA60FAE18E81CF7004E09B1 /* UIFont+PHFont.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DA60FAD18E81CF7004E09B1 /* UIFont+PHFont.m */; };
-		0DA60FB118E8206C004E09B1 /* PHPending.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DA60FB018E8206C004E09B1 /* PHPending.m */; };
 		0DA60FB718E8262C004E09B1 /* PHAnimationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DA60FB618E8262C004E09B1 /* PHAnimationView.m */; };
 		0DA99130189237B700194290 /* PHMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DA9912F189237B700194290 /* PHMainViewController.m */; };
 		0DACA7CA18E10F66000297EB /* PHStoreManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DACA7C918E10F66000297EB /* PHStoreManager.m */; };
-		0DACA7CD18E267D8000297EB /* PHTagCreateSuccess.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DACA7CC18E267D8000297EB /* PHTagCreateSuccess.m */; };
-		0DACA7D818E27753000297EB /* PHServerError.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DACA7D718E27753000297EB /* PHServerError.m */; };
 		0DADA23D189C8CFE00AFA25C /* MWLogging.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DADA23C189C8CFE00AFA25C /* MWLogging.m */; };
 		0DADA241189C8D4E00AFA25C /* PHLocationService.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DADA23F189C8D4E00AFA25C /* PHLocationService.m */; };
 		0DADA244189E049300AFA25C /* PHZoneManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DADA243189E049300AFA25C /* PHZoneManager.m */; };
-		0DADA24A189E133000AFA25C /* PHServer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DADA249189E133000AFA25C /* PHServer.m */; };
 		0DADD5B318DFD79C00E6DD78 /* BugSense-iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DADD5B218DFD79C00E6DD78 /* BugSense-iOS.framework */; };
 		0DB062CB18D3D4CA00F08C3B /* PHTagsStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DB062CA18D3D4CA00F08C3B /* PHTagsStore.m */; };
-		0DBE76C218FCDCD100EC32D4 /* PHUserView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DBE76C118FCDCD100EC32D4 /* PHUserView.m */; };
-		0DBE76C818FD08E400EC32D4 /* UIImage+PHImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DBE76C718FD08E400EC32D4 /* UIImage+PHImage.m */; };
-		0DBE7CD21897442300074E96 /* PHTagView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DBE7CD11897442300074E96 /* PHTagView.m */; };
-		0DC3D612190A3E66009B299B /* PHButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DC3D611190A3E66009B299B /* PHButton.m */; };
+		0DBF9602194EC0C40020CC84 /* PendingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DBF9601194EC0C40020CC84 /* PendingView.swift */; };
+		0DBF9604194EC2CC0020CC84 /* TagCreateSuccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DBF9603194EC2CC0020CC84 /* TagCreateSuccessView.swift */; };
+		0DBF9609194EC5540020CC84 /* Server.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DBF9608194EC5540020CC84 /* Server.swift */; };
+		0DBF960B194EC8540020CC84 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DBF960A194EC8540020CC84 /* Tag.swift */; };
 		0DE54207188E3E85004F72E9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DE54206188E3E85004F72E9 /* Foundation.framework */; };
 		0DE54209188E3E85004F72E9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DE54208188E3E85004F72E9 /* CoreGraphics.framework */; };
 		0DE5420B188E3E85004F72E9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DE5420A188E3E85004F72E9 /* UIKit.framework */; };
@@ -51,6 +53,7 @@
 		0DE54230188E3E86004F72E9 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0DE5422E188E3E86004F72E9 /* InfoPlist.strings */; };
 		0DE54232188E3E86004F72E9 /* PopHelloTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0DE54231188E3E86004F72E9 /* PopHelloTests.m */; };
 		0DE5423C188E406B004F72E9 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0DE5423B188E406B004F72E9 /* CoreLocation.framework */; };
+		0DE90DB61946E642004B6025 /* ServerErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DE90DB51946E642004B6025 /* ServerErrorView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,16 +72,19 @@
 		0D0E039518D154BC009B604E /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		0D0E039818D154CE009B604E /* PopHello.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PopHello.xcdatamodel; sourceTree = "<group>"; };
 		0D1A90C41892656B009636D0 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
-		0D262F4619061ACB001897A8 /* PHTagViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PHTagViewDelegate.h; sourceTree = "<group>"; };
+		0D1DD19B195024BE004CBEDA /* TagViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagViewDelegate.swift; sourceTree = "<group>"; };
+		0D1DD19D19502584004CBEDA /* ActionButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionButton.swift; sourceTree = "<group>"; };
+		0D1DD19F1950292F004CBEDA /* TagCreateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagCreateView.swift; sourceTree = "<group>"; };
+		0D1DD1A119503843004CBEDA /* TagCreateViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagCreateViewDelegate.swift; sourceTree = "<group>"; };
+		0D1DD1A3195042AC004CBEDA /* ZoneManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoneManager.swift; sourceTree = "<group>"; };
 		0D2C848918F91A0A005B85CE /* NSArray+PHArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+PHArray.h"; sourceTree = "<group>"; };
 		0D2C848A18F91A0A005B85CE /* NSArray+PHArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+PHArray.m"; sourceTree = "<group>"; };
 		0D2C848C18FA48D4005B85CE /* PHServiceAvailabilityMonitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHServiceAvailabilityMonitor.h; sourceTree = "<group>"; };
 		0D2C848D18FA48D4005B85CE /* PHServiceAvailabilityMonitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHServiceAvailabilityMonitor.m; sourceTree = "<group>"; };
 		0D2C848F18FA490B005B85CE /* PHServiceAvailabilityDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PHServiceAvailabilityDelegate.h; sourceTree = "<group>"; };
-		0D2C849018FA70D5005B85CE /* PHServiceUnavailable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHServiceUnavailable.h; sourceTree = "<group>"; };
-		0D2C849118FA70D5005B85CE /* PHServiceUnavailable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHServiceUnavailable.m; sourceTree = "<group>"; };
-		0D6488D218CD45B6002FFD3E /* PHTagCreate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHTagCreate.h; sourceTree = "<group>"; };
-		0D6488D318CD45B6002FFD3E /* PHTagCreate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHTagCreate.m; sourceTree = "<group>"; };
+		0D487023195008EE00E8D6AA /* TagView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagView.swift; sourceTree = "<group>"; };
+		0D48702619501C7B00E8D6AA /* UserView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserView.swift; sourceTree = "<group>"; };
+		0D5509CA1946E061001B04B8 /* PopHello-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PopHello-Bridging-Header.h"; sourceTree = "<group>"; };
 		0D70C4221895FD3B0043ED68 /* UIColor+PHColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+PHColor.h"; sourceTree = "<group>"; };
 		0D70C4231895FD3B0043ED68 /* UIColor+PHColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+PHColor.m"; sourceTree = "<group>"; };
 		0D7824D818DAC27100F28481 /* PHLogRecorder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHLogRecorder.h; sourceTree = "<group>"; };
@@ -87,21 +93,15 @@
 		0D7824DC18DBE74000F28481 /* PHTagActiveStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHTagActiveStore.m; sourceTree = "<group>"; };
 		0D7824E418DDA51700F28481 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		0D7824E618DDA52800F28481 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		0D9A91F11947F4950094ECAC /* ServiceUnavailableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceUnavailableView.swift; sourceTree = "<group>"; };
 		0DA60FAC18E81CF7004E09B1 /* UIFont+PHFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+PHFont.h"; sourceTree = "<group>"; };
 		0DA60FAD18E81CF7004E09B1 /* UIFont+PHFont.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+PHFont.m"; sourceTree = "<group>"; };
-		0DA60FAF18E8206C004E09B1 /* PHPending.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHPending.h; sourceTree = "<group>"; };
-		0DA60FB018E8206C004E09B1 /* PHPending.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHPending.m; sourceTree = "<group>"; };
 		0DA60FB518E8262C004E09B1 /* PHAnimationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHAnimationView.h; sourceTree = "<group>"; };
 		0DA60FB618E8262C004E09B1 /* PHAnimationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHAnimationView.m; sourceTree = "<group>"; };
 		0DA9912E189237B700194290 /* PHMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHMainViewController.h; sourceTree = "<group>"; };
 		0DA9912F189237B700194290 /* PHMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHMainViewController.m; sourceTree = "<group>"; };
 		0DACA7C818E10F66000297EB /* PHStoreManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHStoreManager.h; sourceTree = "<group>"; };
 		0DACA7C918E10F66000297EB /* PHStoreManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHStoreManager.m; sourceTree = "<group>"; };
-		0DACA7CB18E267D8000297EB /* PHTagCreateSuccess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHTagCreateSuccess.h; sourceTree = "<group>"; };
-		0DACA7CC18E267D8000297EB /* PHTagCreateSuccess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHTagCreateSuccess.m; sourceTree = "<group>"; };
-		0DACA7D218E26CD5000297EB /* PHTagCreateDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PHTagCreateDelegate.h; sourceTree = "<group>"; };
-		0DACA7D618E27753000297EB /* PHServerError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHServerError.h; sourceTree = "<group>"; };
-		0DACA7D718E27753000297EB /* PHServerError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHServerError.m; sourceTree = "<group>"; };
 		0DADA23B189C8CFE00AFA25C /* MWLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWLogging.h; sourceTree = "<group>"; };
 		0DADA23C189C8CFE00AFA25C /* MWLogging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWLogging.m; sourceTree = "<group>"; };
 		0DADA23E189C8D4E00AFA25C /* PHLocationService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHLocationService.h; sourceTree = "<group>"; };
@@ -110,21 +110,15 @@
 		0DADA242189E049300AFA25C /* PHZoneManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHZoneManager.h; sourceTree = "<group>"; };
 		0DADA243189E049300AFA25C /* PHZoneManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHZoneManager.m; sourceTree = "<group>"; };
 		0DADA246189E0BA400AFA25C /* PHZoneManagerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PHZoneManagerDelegate.h; sourceTree = "<group>"; };
-		0DADA248189E133000AFA25C /* PHServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHServer.h; sourceTree = "<group>"; };
-		0DADA249189E133000AFA25C /* PHServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHServer.m; sourceTree = "<group>"; };
 		0DADD5B218DFD79C00E6DD78 /* BugSense-iOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = "BugSense-iOS.framework"; sourceTree = "<group>"; };
 		0DB062C918D3D4CA00F08C3B /* PHTagsStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHTagsStore.h; sourceTree = "<group>"; };
 		0DB062CA18D3D4CA00F08C3B /* PHTagsStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHTagsStore.m; sourceTree = "<group>"; };
 		0DB062CC18D3EDFB00F08C3B /* MockRoute.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = MockRoute.gpx; path = ../MockRoute.gpx; sourceTree = "<group>"; };
-		0DBE76C018FCDCD100EC32D4 /* PHUserView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHUserView.h; sourceTree = "<group>"; };
-		0DBE76C118FCDCD100EC32D4 /* PHUserView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHUserView.m; sourceTree = "<group>"; };
-		0DBE76C618FD08E400EC32D4 /* UIImage+PHImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+PHImage.h"; sourceTree = "<group>"; };
-		0DBE76C718FD08E400EC32D4 /* UIImage+PHImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+PHImage.m"; sourceTree = "<group>"; };
-		0DBE7CD01897442300074E96 /* PHTagView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHTagView.h; sourceTree = "<group>"; };
-		0DBE7CD11897442300074E96 /* PHTagView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHTagView.m; sourceTree = "<group>"; };
+		0DBF9601194EC0C40020CC84 /* PendingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PendingView.swift; sourceTree = "<group>"; };
+		0DBF9603194EC2CC0020CC84 /* TagCreateSuccessView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagCreateSuccessView.swift; sourceTree = "<group>"; };
+		0DBF9608194EC5540020CC84 /* Server.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Server.swift; sourceTree = "<group>"; };
+		0DBF960A194EC8540020CC84 /* Tag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
 		0DC3D13318E8FAD500C2FFF9 /* PHAnimationViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PHAnimationViewDelegate.h; sourceTree = "<group>"; };
-		0DC3D610190A3E66009B299B /* PHButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHButton.h; sourceTree = "<group>"; };
-		0DC3D611190A3E66009B299B /* PHButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHButton.m; sourceTree = "<group>"; };
 		0DE54203188E3E85004F72E9 /* PopHello.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PopHello.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0DE54206188E3E85004F72E9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		0DE54208188E3E85004F72E9 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -143,6 +137,7 @@
 		0DE5422F188E3E86004F72E9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		0DE54231188E3E86004F72E9 /* PopHelloTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PopHelloTests.m; sourceTree = "<group>"; };
 		0DE5423B188E406B004F72E9 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		0DE90DB51946E642004B6025 /* ServerErrorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerErrorView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,6 +169,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0D48702519501C6500E8D6AA /* Component */ = {
+			isa = PBXGroup;
+			children = (
+				0D48702619501C7B00E8D6AA /* UserView.swift */,
+				0D1DD19D19502584004CBEDA /* ActionButton.swift */,
+			);
+			name = Component;
+			sourceTree = "<group>";
+		};
 		0D70C4211895FCC80043ED68 /* Utility */ = {
 			isa = PBXGroup;
 			children = (
@@ -187,8 +191,6 @@
 				0DA60FAD18E81CF7004E09B1 /* UIFont+PHFont.m */,
 				0D2C848918F91A0A005B85CE /* NSArray+PHArray.h */,
 				0D2C848A18F91A0A005B85CE /* NSArray+PHArray.m */,
-				0DBE76C618FD08E400EC32D4 /* UIImage+PHImage.h */,
-				0DBE76C718FD08E400EC32D4 /* UIImage+PHImage.m */,
 			);
 			name = Utility;
 			sourceTree = "<group>";
@@ -203,15 +205,6 @@
 			name = Animation;
 			sourceTree = "<group>";
 		};
-		0DADA247189E132200AFA25C /* Server */ = {
-			isa = PBXGroup;
-			children = (
-				0DADA248189E133000AFA25C /* PHServer.h */,
-				0DADA249189E133000AFA25C /* PHServer.m */,
-			);
-			name = Server;
-			sourceTree = "<group>";
-		};
 		0DB062C718D3D42300F08C3B /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -223,7 +216,6 @@
 				0D2C848F18FA490B005B85CE /* PHServiceAvailabilityDelegate.h */,
 				0D094FCE18D7FC4D006EFD4C /* PHTagNotification.h */,
 				0D094FCF18D7FC4D006EFD4C /* PHTagNotification.m */,
-				0DADA247189E132200AFA25C /* Server */,
 				0DB062C818D3D45E00F08C3B /* Data */,
 			);
 			name = Model;
@@ -242,17 +234,6 @@
 			name = Data;
 			sourceTree = "<group>";
 		};
-		0DBE76BF18FCDC9800EC32D4 /* Component */ = {
-			isa = PBXGroup;
-			children = (
-				0DBE76C018FCDCD100EC32D4 /* PHUserView.h */,
-				0DBE76C118FCDCD100EC32D4 /* PHUserView.m */,
-				0DC3D610190A3E66009B299B /* PHButton.h */,
-				0DC3D611190A3E66009B299B /* PHButton.m */,
-			);
-			name = Component;
-			sourceTree = "<group>";
-		};
 		0DBE7CCE189743CC00074E96 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -268,33 +249,55 @@
 		0DBE7CCF189743E200074E96 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				0DBE76BF18FCDC9800EC32D4 /* Component */,
 				0DACA7CE18E26979000297EB /* Animation */,
-				0DBE7CD01897442300074E96 /* PHTagView.h */,
-				0DBE7CD11897442300074E96 /* PHTagView.m */,
-				0D262F4619061ACB001897A8 /* PHTagViewDelegate.h */,
-				0D6488D218CD45B6002FFD3E /* PHTagCreate.h */,
-				0D6488D318CD45B6002FFD3E /* PHTagCreate.m */,
-				0DACA7D218E26CD5000297EB /* PHTagCreateDelegate.h */,
-				0DACA7CB18E267D8000297EB /* PHTagCreateSuccess.h */,
-				0DACA7CC18E267D8000297EB /* PHTagCreateSuccess.m */,
-				0DACA7D618E27753000297EB /* PHServerError.h */,
-				0DACA7D718E27753000297EB /* PHServerError.m */,
-				0DA60FAF18E8206C004E09B1 /* PHPending.h */,
-				0DA60FB018E8206C004E09B1 /* PHPending.m */,
-				0D2C849018FA70D5005B85CE /* PHServiceUnavailable.h */,
-				0D2C849118FA70D5005B85CE /* PHServiceUnavailable.m */,
 			);
 			name = View;
+			sourceTree = "<group>";
+		};
+		0DBF9605194EC46B0020CC84 /* PopHello (Swift) */ = {
+			isa = PBXGroup;
+			children = (
+				0DBF9607194EC51F0020CC84 /* Model */,
+				0DBF9606194EC4840020CC84 /* View */,
+			);
+			name = "PopHello (Swift)";
+			sourceTree = "<group>";
+		};
+		0DBF9606194EC4840020CC84 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				0D48702519501C6500E8D6AA /* Component */,
+				0DBF9603194EC2CC0020CC84 /* TagCreateSuccessView.swift */,
+				0DBF9601194EC0C40020CC84 /* PendingView.swift */,
+				0D9A91F11947F4950094ECAC /* ServiceUnavailableView.swift */,
+				0DE90DB51946E642004B6025 /* ServerErrorView.swift */,
+				0D487023195008EE00E8D6AA /* TagView.swift */,
+				0D1DD19B195024BE004CBEDA /* TagViewDelegate.swift */,
+				0D1DD19F1950292F004CBEDA /* TagCreateView.swift */,
+				0D1DD1A119503843004CBEDA /* TagCreateViewDelegate.swift */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		0DBF9607194EC51F0020CC84 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				0DBF9608194EC5540020CC84 /* Server.swift */,
+				0DBF960A194EC8540020CC84 /* Tag.swift */,
+				0D1DD1A3195042AC004CBEDA /* ZoneManager.swift */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 		0DE541FA188E3E85004F72E9 = {
 			isa = PBXGroup;
 			children = (
+				0DBF9605194EC46B0020CC84 /* PopHello (Swift) */,
 				0DE5420C188E3E85004F72E9 /* PopHello */,
 				0DE5422B188E3E86004F72E9 /* PopHelloTests */,
 				0DE54205188E3E85004F72E9 /* Frameworks */,
 				0DE54204188E3E85004F72E9 /* Products */,
+				0D5509CA1946E061001B04B8 /* PopHello-Bridging-Header.h */,
 			);
 			sourceTree = "<group>";
 		};
@@ -477,33 +480,36 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0DADA24A189E133000AFA25C /* PHServer.m in Sources */,
+				0D1DD19E19502584004CBEDA /* ActionButton.swift in Sources */,
+				0D9A91F21947F4950094ECAC /* ServiceUnavailableView.swift in Sources */,
 				0D094FD018D7FC4D006EFD4C /* PHTagNotification.m in Sources */,
 				0D7824DD18DBE74000F28481 /* PHTagActiveStore.m in Sources */,
-				0DC3D612190A3E66009B299B /* PHButton.m in Sources */,
-				0DACA7CD18E267D8000297EB /* PHTagCreateSuccess.m in Sources */,
+				0DBF9602194EC0C40020CC84 /* PendingView.swift in Sources */,
 				0DE54217188E3E85004F72E9 /* PHAppDelegate.m in Sources */,
+				0D1DD1A01950292F004CBEDA /* TagCreateView.swift in Sources */,
 				0DADA23D189C8CFE00AFA25C /* MWLogging.m in Sources */,
-				0DBE76C218FCDCD100EC32D4 /* PHUserView.m in Sources */,
+				0DBF9604194EC2CC0020CC84 /* TagCreateSuccessView.swift in Sources */,
 				0DA60FAE18E81CF7004E09B1 /* UIFont+PHFont.m in Sources */,
+				0D1DD19C195024BE004CBEDA /* TagViewDelegate.swift in Sources */,
+				0D487024195008EE00E8D6AA /* TagView.swift in Sources */,
 				0DA99130189237B700194290 /* PHMainViewController.m in Sources */,
-				0D6488D418CD45B6002FFD3E /* PHTagCreate.m in Sources */,
 				0DE54213188E3E85004F72E9 /* main.m in Sources */,
+				0D1DD1A219503843004CBEDA /* TagCreateViewDelegate.swift in Sources */,
+				0DBF9609194EC5540020CC84 /* Server.swift in Sources */,
+				0DE90DB61946E642004B6025 /* ServerErrorView.swift in Sources */,
 				0D2C848E18FA48D4005B85CE /* PHServiceAvailabilityMonitor.m in Sources */,
 				0DADA241189C8D4E00AFA25C /* PHLocationService.m in Sources */,
 				0DACA7CA18E10F66000297EB /* PHStoreManager.m in Sources */,
 				0DB062CB18D3D4CA00F08C3B /* PHTagsStore.m in Sources */,
-				0D2C849218FA70D5005B85CE /* PHServiceUnavailable.m in Sources */,
-				0DBE76C818FD08E400EC32D4 /* UIImage+PHImage.m in Sources */,
 				0DADA244189E049300AFA25C /* PHZoneManager.m in Sources */,
-				0DACA7D818E27753000297EB /* PHServerError.m in Sources */,
 				0D0E039918D154CE009B604E /* PopHello.xcdatamodeld in Sources */,
-				0DBE7CD21897442300074E96 /* PHTagView.m in Sources */,
 				0D7824DA18DAC27100F28481 /* PHLogRecorder.m in Sources */,
 				0DA60FB718E8262C004E09B1 /* PHAnimationView.m in Sources */,
+				0D1DD1A4195042AC004CBEDA /* ZoneManager.swift in Sources */,
 				0D70C4241895FD3B0043ED68 /* UIColor+PHColor.m in Sources */,
+				0D48702719501C7B00E8D6AA /* UserView.swift in Sources */,
+				0DBF960B194EC8540020CC84 /* Tag.swift in Sources */,
 				0D2C848B18F91A0A005B85CE /* NSArray+PHArray.m in Sources */,
-				0DA60FB118E8206C004E09B1 /* PHPending.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -628,6 +634,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: James Hibberd (J8DTP2RX73)";
 				COPY_PHASE_STRIP = YES;
@@ -638,8 +645,12 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PopHello/PopHello-Prefix.pch";
 				INFOPLIST_FILE = "PopHello/PopHello-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "4E58C837-382E-4181-8B52-9692F8BA8117";
+				SWIFT_OBJC_BRIDGING_HEADER = "PopHello-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -649,6 +660,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -657,8 +669,11 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PopHello/PopHello-Prefix.pch";
 				INFOPLIST_FILE = "PopHello/PopHello-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "4E58C837-382E-4181-8B52-9692F8BA8117";
+				SWIFT_OBJC_BRIDGING_HEADER = "PopHello-Bridging-Header.h";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
